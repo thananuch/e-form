@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+  margin: 0;
+}
+
+@font-face {
+  font-family: "PromptRegular";
+  src: local("PromptRegular"),url("./asseets/fonts/Prompt/Prompt-Regular.ttf") format("truetype");
+}
+
+.swal2-container{
+  font-family: "PromptRegular";
+  src: local("PromptRegular"),url("./asseets/fonts/Prompt/Prompt-Regular.ttf") format("truetype");
+}
+
+.bg-left-login{
+  background: linear-gradient(359.29deg, #343F9E 2.38%, rgba(104, 52, 158, 0) 41.7%);
+}
+
+input , button , select {
+  font-family: "PromptRegular";
+  src: local("PromptRegular"),url("./asseets/fonts/Prompt/Prompt-Regular.ttf") format("truetype");
+  font-size: medium;
+}
+
+input::placeholder {
+  font-family: "PromptRegular";
+  src: local("PromptRegular"),url("./asseets/fonts/Prompt/Prompt-Regular.ttf") format("truetype");
+  font-size: medium;
+}
+
+.btn:focus, .btn:hover, a {
+  text-decoration: none;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  margin-top: 1rem;
+  border: 0;
+  border-top: 1px solid #CCD4E5;
+}
