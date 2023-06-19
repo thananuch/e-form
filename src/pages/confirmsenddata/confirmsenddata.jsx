@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 import Content from '../../components/layout/Content';
+import Profile from '../../components/propsPage/profile';
 
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
@@ -47,14 +48,14 @@ function Confirmsenddata() {
                     </div>
                     <div className='flex-1 flex flex-col py-12 px-[0rem] box-border items-start justify-start gap-[2rem]'>
                         <div className="self-stretch flex flex-col items-start justify-start">
-                        <div className="self-stretch h-[2rem] flex flex-row items-center justify-start">
-                            <div className="flex-1 relative leading-[150%] font-bold text-xl text-[#F5F8FF]">
-                            <AiOutlineCheck></AiOutlineCheck> Step 1
+                            <div className="self-stretch h-[2rem] flex flex-row items-center justify-start">
+                                <div className="flex-1 relative leading-[150%] font-bold text-xl text-[#F5F8FF]">
+                                <AiOutlineCheck></AiOutlineCheck> Step 1
+                                </div>
                             </div>
-                        </div>
-                        <div className="self-stretch relative text-lg leading-[150%] text-white">
-                            ข้อตกลงและเงื่อนไข
-                        </div>
+                            <div className="self-stretch relative text-lg leading-[150%] text-white">
+                                ข้อตกลงและเงื่อนไข
+                            </div>
                         </div>
                         <div className="self-stretch flex flex-col items-start justify-start pt-[1.38rem]">
                         <div className="self-stretch h-[2rem] flex flex-row items-center justify-start">
@@ -107,93 +108,7 @@ function Confirmsenddata() {
                         <div className="w-[90%] mx-auto">
                             <h2 className='text-2xl'>ยืนยันการส่งข้อมูล</h2>
 
-                            <h4 className='text-xl' >ข้อมูลทั่วไป</h4>
-                            <hr/> 
-                            <div className='grid grid-cols-2 gap-8 mt-4'>
-                                <div className="grid-rows-2 gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        เลขประจำตัวประชาชน 13 หลัก
-                                    </div>
-                                    <div>xxxxxxxxxxxxx</div>
-                                </div>
-                            </div>
-
-                            <div className='grid grid-cols-2 gap-8 mt-4'>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        เพศ
-                                    </div>
-                                    <div>ชาย</div>
-                                </div>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        วัน-เดือน-ปีเกิด
-                                    </div>
-                                    <div>24/ตุลาคม/2532</div>
-                                </div>
-                            </div>
-                            <div className='grid grid-cols-2 gap-8 mt-4'>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        ชื่อภาษาไทย
-                                    </div>
-                                    <div>นายทดสอบ ระบบ</div>
-                                </div>
-                            </div>
-
-                            <div className='grid grid-cols-2 gap-8 mt-4'>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        ชื่อ ภาษาอังกฤษ
-                                    </div>
-                                    <div>Mr. Test System</div>
-                                </div>
-                            </div>
-
-                            <div className='grid grid-cols-2 gap-8 mt-4'>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        อาชีพ
-                                    </div>
-                                    <div>อื่นๆ</div>
-                                </div>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        ระบุอาชีพ
-                                    </div>
-                                    <div>โปรแกรมเมอร์</div>
-                                </div>
-                            </div>
-
-                            <h4 className='text-xl' >ข้อมูลการติดต่อ และ ที่อยู่</h4>
-                            <hr/>
-                            <h5 className='text-lg'>ข้อมูลการติดต่อ</h5>
-                            <div className='grid grid-cols-2 gap-8 '>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        โทรศัพท์
-                                    </div>
-                                    <div>-</div>
-                                </div>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        โทรศัพท์มือถือ
-                                    </div>
-                                    <div>0900933333</div>
-                                </div>
-                            </div>
-                            <h5 className='text-lg'>ที่อยู่</h5>
-                            <div className='grid grid-cols-1 gap-8 '>
-                                <div className="grid-flow-row gap-[0.5rem] ">
-                                    <div className="text-sm font-bold my-1 ">
-                                        รายละเอียดที่อยู่
-                                    </div>
-                                    <div>
-                                        เลขที่ 98 ห้องเลขที่ 96/98, ชั้นที่ 6 ,ซอย รัชดาภิเษก 19, ถนน รัชดาภิเษก อำเภอ/เขต ดินแดง , ตำบล/แขวง ดินแดง 
-                                        รหัสไปรษณีย์ 10400
-                                    </div>
-                                </div>
-                            </div>
+                            <Profile />
                             <h4 className='text-xl' >ข้อมูลบัญชี</h4>
                             <hr/>
                             <div className='grid grid-cols-3 gap-8 '>

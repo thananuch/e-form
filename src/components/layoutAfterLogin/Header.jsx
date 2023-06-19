@@ -8,10 +8,16 @@ import { Menu } from '@headlessui/react'
 import { AiOutlineMessage } from "react-icons/ai";
 
 import ChangePasswordModal from '../../modal/changePasswordModal/changePasswordModal';
-
+import CancelUsernameModal from '../../modal/cancelUsernameModal/cancelUsernameModal';
+import RenewdelegateModal  from '../../modal/renewdelegateModal/renewdelegateModal';
+import ChangetypeDelegateModal from '../../modal/changetypeDelegateModal/changetypeDelegateModal';
 
 function Header() {
-  const [showMoadlChangePassword, setShowMoadlChangePassword]  = useState(false)
+  const [showMoadlChangePassword, setShowMoadlChangePassword]  = useState(false);
+  const [showCancelUsernameModal, setshowCancelUsernameModal]  = useState(false);
+  const [showRenewdelegateModal, setShowRenewdelegateModal]  = useState(false);
+  const [showChangetypeDelegateModal, setShowChangetypeDelegateModal]  = useState(false);
+
   return (
     <>  
         <div className='w-full shadow-[0px_4px_4px_rgba(0,0,0,0.05)] bg-white'>
@@ -23,7 +29,7 @@ function Header() {
                             <nav className="text-sm leading-6 font-semibold text-slate-700 dark:text-slate-200">
                                 <ul className="flex space-x-8 list-none">
                                     <li className='pt-3'>
-                                        <Link className="text-lg text-gray-800 hover:text-sky-500 dark:hover:text-sky-400" >หน้าหลัก</Link>
+                                        <Link className="text-lg text-gray-800 hover:text-sky-500 dark:hover:text-sky-400" to='/member/home' >หน้าหลัก</Link>
                                     </li>
                                     <li className='pt-3'>
                                         <Link className="text-lg text-gray-800  hover:text-sky-500 dark:hover:text-sky-400" > ติดต่อเรา</Link>
@@ -52,12 +58,13 @@ function Header() {
                                             </Menu.Button >
                                             <Menu.Items className="absolute mt-2 w-56 py-4 bg-white text-gray-800 shadow-[0px_4px_4px_rgba(0,0,0,0.05)] font-light ">
                                                 <Menu.Item>
-                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500' >
+                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500' to='/member/verificationchannel' >
                                                         ยืนยันตัวตน 
                                                     </Link>
                                                 </Menu.Item>
                                                 <Menu.Item>
-                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500' >
+                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500'
+                                                     to='/member/termsconditionsdelegate' >
                                                         เปลี่ยนประเภทผู้ใช้งาน 
                                                     </Link>
                                                 </Menu.Item>
@@ -68,17 +75,20 @@ function Header() {
                                                     </Link>
                                                 </Menu.Item>
                                                 <Menu.Item>
-                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500' >
+                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500'
+                                                     to='/member/editinformationperson' >
                                                         แก้ไขข้อมูลส่วนบุคคล 
                                                     </Link>
                                                 </Menu.Item>
                                                 <Menu.Item>
-                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500' >
+                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500'
+                                                        onClick={() => setShowChangetypeDelegateModal(true)} >
                                                         เปลี่ยนกลุ่มผู้แทนจดทะเบียน 
                                                     </Link>
                                                 </Menu.Item>
                                                 <Menu.Item>
-                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500' >
+                                                    <Link className='text-lg px-4 py-3 text-gray-800 group flex hover:text-sky-500'
+                                                        onClick={() => setshowCancelUsernameModal(true)} >
                                                         ยกเลิกบัญชีผู้ใช้งาน 
                                                     </Link>
                                                 </Menu.Item>
@@ -98,6 +108,9 @@ function Header() {
             </div>
         </div>
         <ChangePasswordModal isVisible={showMoadlChangePassword} onClose={() => setShowMoadlChangePassword(false)} />
+        <CancelUsernameModal isVisible={showCancelUsernameModal} onClose={() => setshowCancelUsernameModal(false)} />
+        <RenewdelegateModal isVisible={showRenewdelegateModal} onClose={() => setShowRenewdelegateModal(false)} />
+        <ChangetypeDelegateModal isVisible={showChangetypeDelegateModal} onClose={() => setShowChangetypeDelegateModal(false)} />
     </>
   )
 }

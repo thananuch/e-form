@@ -16,7 +16,6 @@ function Termsconditions() {
   return (
     <>
         <Content />
-
         <div className='bg-gradient-to-b from-EEF0F6 to-EFEAE1 w-full'>
             <div className='max-w-[90rem] mx-auto px-4 p-20 flex'>
               <div className='w-[20rem] py-4 rounded-l-xl bg-gradient-to-b from-977EBB to-6482C2  px-10 flex flex-row gap-[2rem]'>

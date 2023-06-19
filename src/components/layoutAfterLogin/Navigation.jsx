@@ -10,14 +10,14 @@ import { RiBallPenFill } from "react-icons/ri";
 
 
 function Navigation() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     
   return (
     <>  
-        <div className="absolute mt-10 shadow-[6px_4px_24px_rgba(0,0,0,0.05)]">
+        <div className="mt-10 shadow-[6px_4px_24px_rgba(0,0,0,0.05)]">
             <div
                 className={` ${
-                open ? "w-70" : "w-20 "
+                open ? "w-35" : "w-10 "
                 } bg-white h-[90vh] p-5 pt-8 relative rounded-3xl`}
             >
                 <Link className={`absolute cursor-pointer -right-3 top-5 w-7 border-dark-purple duration-500

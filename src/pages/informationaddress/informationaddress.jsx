@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 
 import Content from '../../components/layout/Content';
 
+import InformationaddressForm from '../../components/propsPage/informationaddressForm';
+
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
 import { MdBallot } from "react-icons/md";
@@ -107,139 +109,7 @@ function Infomationaddress () {
                     <div className='w-full bg-white p-4 rounded-3xl drop-shadow-[0_2px_10px_rgba(36,36,36,0.1)]'>
                         <div className="w-[90%] mx-auto">
                             <div className='w-full mt-4'>
-                                <h2 className='text-2xl'>ข้อมูลการติดต่อ และ ที่อยู่</h2>
-                                <hr/> 
-                                <h4>ข้อมูลการติดต่อ</h4>
-                                <div className='grid grid-cols-2 gap-8'>
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">โทรศัพท์</div>
-                                        <input placeholder="ระบุ โทรศัพท์" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            โทรศัพท์มือถือ <span className='text-red-500'>*</span>
-                                        </div>
-                                        <input placeholder="ระบุ โทรศัพท์มือถือ" maxLength='10'
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-                                </div>
-                                <h4>ข้อมูลที่อยู่</h4>
-                                <div className='grid grid-flow-row-dense grid-cols-3 gap-8'>
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">เลขที่</div>
-                                        <input placeholder="ระบุ เลขที่" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                        
-                                    </div>
-
-                                    <div className="grid-flow-row gap-[0.5rem] col-span-2">
-                                        <div className="text-sm my-1 ">
-                                            รายละเอียดที่อยู่ (ถ้ามี) 
-                                        </div>
-                                        <input placeholder="ห้องเลขที่, ชั้น, อาคาร, หมู่บ้าน" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-                                </div>
-                                <div className='grid grid-cols-2 gap-8 mt-4'>
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            หมู่ที่ <span className='text-red-500'>*</span>
-                                        </div>
-                                        <input placeholder="ระบุ หมู่" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            ตรอก <span className='text-red-500'>*</span>
-                                        </div>
-                                        <input placeholder="ระบุ ตรอก" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className='grid grid-cols-2 gap-8 mt-4'>
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            ซอย <span className='text-red-500'>*</span>
-                                        </div>
-                                        <input placeholder="ระบุ ซอย" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            ถนน <span className='text-red-500'>*</span>
-                                        </div>
-                                        <input placeholder="ระบุ ถนน" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                                            type="text"
-                                        />
-                                    </div>
-                                </div>
-                                <div className='grid grid-cols-3 gap-8 mt-4'>
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            ตําบล/แขวง <span className='text-red-500'>*</span>
-                                        </div>
-                                        <select  placeholder="เลือก ตําบล/แขวง" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 ">
-                                            <option value={0} >เลือก ตําบล/แขวง</option>
-                                           
-                                        </select>
-                                        
-                                    </div>
-
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            อําเภอ/เขต <span className='text-red-500'>*</span>
-                                        </div>
-                                        <select placeholder="เลือก อําเภอ/เขต" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                                            type="text" >
-                                             <option value={0} >เลือก ตําบล/แขวง</option>
-                                        </select>
-                                    </div>
-
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            จังหวัด <span className='text-red-500'>*</span>
-                                        </div>
-                                        <select placeholder="เลือก จังหวัด" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                                            type="text" >
-                                             <option value={0} >เลือก จังหวัด</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div className='grid grid-cols-3 gap-8 mt-4'>
-                                    <div className="grid-flow-row gap-[0.5rem]">
-                                        <div className="text-sm my-1 ">
-                                            รหัสไปรษณีย์ <span className='text-red-500'>*</span>
-                                        </div>
-                                        <select  placeholder="กรุณาเลือก รหัสไปรษณีย์" 
-                                            className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 ">
-                                            <option value={0} >เลือก รหัสไปรษณีย์</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <InformationaddressForm />
 
                                 <div className='my-4 flex justify-end mt-8'>
                                     <Link className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg " 

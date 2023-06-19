@@ -6,6 +6,10 @@ body{
   margin: 0;
 }
 
+select {
+  overflow: inherit;
+}
+
 @font-face {
   font-family: "PromptRegular";
   src: local("PromptRegular"),url("./asseets/fonts/Prompt/Prompt-Regular.ttf") format("truetype");
