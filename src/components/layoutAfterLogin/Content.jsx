@@ -1,13 +1,11 @@
-
-import Layout from './Layout';
+import Layout from "./Layout";
 
 function Content() {
-
   return (
     <>
-      <Layout/>
+      <Layout />
     </>
-  )
+  );
 }
 
 export default Content;

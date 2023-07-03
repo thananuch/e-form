@@ -47,3 +47,52 @@ hr {
   border: 0;
   border-top: 1px solid #CCD4E5;
 }
+
+.swal2-title {
+  color: #000;
+  text-align: center;
+  font-size:  1.875rem;
+  margin: 0;
+  padding: 0;
+}
+
+.swal2-popup {
+  border-radius: 24px;
+  width: 27.625rem;
+  height: 22.625rem;
+  font-size: 16px;
+}
+
+.swal2-popup .swal2-html-container {
+  color: #666; 
+  font-size: 16px; 
+  border: none; 
+}
+
+.swal2-popup .swal2-actions .swal2-confirm {
+  background: var(--purple-bg, #E6E9F5);
+  color :#343F9E;
+  border: none; 
+  border-radius: 25px;
+  padding: 10px 140px; 
+  font-size: 16px; 
+}
+
+.swal2-popup .swal2-actions .swal2-cancel {
+  background-color: #f44336; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px;
+  padding: 10px 20px; 
+  font-size: 16px; 
+}
+
+input::placeholder {
+  font-size: 14px;
+}
+
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
