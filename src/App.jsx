@@ -114,7 +114,7 @@ function App() {
         />
         <Route
           key="r5"
-          path="/informationperson"
+          path="/informationperson/:typeAccountRegist"
           element={
             <Suspense key="s5" fallback={<LoadingSpinner />}>
               <Informationperson />
@@ -123,7 +123,7 @@ function App() {
         />
         <Route
           key="r6"
-          path="/informationaddress"
+          path="/informationaddress/:typeAccountRegist"
           element={
             <Suspense key="s6" fallback={<LoadingSpinner />}>
               <Infomationaddress />
@@ -132,7 +132,7 @@ function App() {
         />
         <Route
           key="r7"
-          path="/informationaccount"
+          path="/informationaccount/:typeAccountRegist"
           element={
             <Suspense key="s7" fallback={<LoadingSpinner />}>
               <Informationaccount />
@@ -141,7 +141,7 @@ function App() {
         />
         <Route
           key="r8"
-          path="/confirmsenddata"
+          path="/confirmsenddata/:typeAccountRegist"
           element={
             <Suspense key="s8" fallback={<LoadingSpinner />}>
               <Confirmsenddata />

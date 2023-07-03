@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useParams } from "react-router-dom";
 import Content from "../../../components/layout/Content";
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
@@ -12,9 +12,13 @@ import {
 } from "react-icons/ai";
 
 function Informationaccount() {
+
+  const {typeAccountRegist} = useParams();
+
+  
+
   const [passwordInputText, setPasswordInputText] = useState("password");
-  const [passwordInputConfirmText, setPasswordInputConfirmText] =
-    useState("password");
+  const [passwordInputConfirmText, setPasswordInputConfirmText] =  useState("password");
 
   const toggleInputPassword = () => {
     if (passwordInputText === "password") {
@@ -30,6 +34,12 @@ function Informationaccount() {
       return;
     }
     setPasswordInputConfirmText("password");
+  };
+
+
+  const validateInformationaccount = () => {
+    
+    window.location.href = `/confirmsenddata/${typeAccountRegist}`;
   };
 
   return (
@@ -224,14 +234,14 @@ function Informationaccount() {
                   <div className="my-4 flex justify-end mt-8">
                     <Link
                       className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "
-                      to="/informationaddress"
+                      to={`/informationaddress/${typeAccountRegist}`}
                     >
                       ย้อนกลับ
                     </Link>
                     <Link
                       className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
                                     text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                      to="/confirmsenddata"
+                      onClick={() => validateInformationaccount()} 
                     >
                       ดำเนินการต่อ
                     </Link>

@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useState} from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import Content from "../../../components/layout/Content";
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
@@ -9,6 +10,26 @@ import NormalPerson from "../../../asseets/images/normalPerson.png";
 import DelegatePerson from "../../../asseets/images/delegatePerson.png";
 
 function Selecttypeuser() {
+
+  const [typeAccountRegist, setTypeAccountRegist] = useState("");
+
+  const selectChannelRegist = (event) => {
+    setTypeAccountRegist(event.target.value);
+  };
+
+  const validateSelectTypeAccountRegist = () => {
+    if (typeAccountRegist == null || typeAccountRegist === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "แจ้งเตือน",
+        text: "โปรดเลือกประเภทการลงทะเบียน",
+        confirmButtonText: "ตกลง",
+      });
+      return;
+    }
+    window.location.href = `/informationperson/${typeAccountRegist}`;
+  };
+
   return (
     <>
       <Content />
@@ -129,9 +150,10 @@ function Selecttypeuser() {
                           <input
                             id="bordered-radio-1"
                             type="radio"
-                            value=""
+                            value="N"
                             name="bordered-radio"
                             className="w-5 h-5 my-4 border-white outline-blue-50 bg-gray-100 focus:bg-blue-500 focus:outline-none ring-blue-500 "
+                            onChange={selectChannelRegist}
                           />
                           <label
                             htmlFor="bordered-radio-1"
@@ -162,9 +184,10 @@ function Selecttypeuser() {
                           <input
                             id="bordered-radio-2"
                             type="radio"
-                            value=""
+                            value="D"
                             name="bordered-radio"
                             className="w-5 h-5 my-4 border-white outline-blue-50 bg-gray-100 focus:bg-blue-500 focus:outline-none ring-blue-500 "
+                            onChange={selectChannelRegist}
                           />
                           <label
                             htmlFor="bordered-radio-2"
@@ -187,8 +210,7 @@ function Selecttypeuser() {
                   <Link
                     className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
                           text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                    to="/informationperson"
-                  >
+                    onClick={() => validateSelectTypeAccountRegist()} >
                     ดำเนินการต่อ
                   </Link>
                 </div>

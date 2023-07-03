@@ -33,7 +33,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   //ระบุรหัสผู้ใช้
   const [userOrIdCard, setUserOrIdCard] = useState("");
 
-  const slelctChannelForgotPass = (event) => {
+  const selectChannelForgotPass = (event) => {
     setTypeChannelForgotPass(event.target.value);
   };
 
@@ -263,7 +263,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         className="hidden"
                         value="1"
                         name="forgotCahannel"
-                        onChange={slelctChannelForgotPass}
+                        onChange={selectChannelForgotPass}
                       />
                       <label
                         htmlFor="forgotChannel1"
@@ -325,7 +325,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         value="2"
                         className="hidden"
                         name="forgotCahannel"
-                        onChange={slelctChannelForgotPass}
+                        onChange={selectChannelForgotPass}
                       />
                       <label
                         htmlFor="forgotChannel2"
@@ -387,7 +387,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         className="hidden"
                         value="3"
                         name="forgotCahannel"
-                        onChange={slelctChannelForgotPass}
+                        onChange={selectChannelForgotPass}
                       />
                       <label
                         htmlFor="forgotChannel3"

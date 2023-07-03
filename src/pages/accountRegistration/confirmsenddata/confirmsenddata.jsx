@@ -1,13 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link , useParams } from "react-router-dom";
 import Content from "../../../components/layout/Content";
 import Profile from "../../../components/propsPage/profile";
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
 import { MdBallot } from "react-icons/md";
-import { AiFillSave, AiOutlineCheck } from "react-icons/ai";
+import { AiFillSave, AiOutlineCheck , AiOutlineSearch } from "react-icons/ai";
 
 function Confirmsenddata() {
+  const {typeAccountRegist} = useParams();
   return (
     <>
       <Content />
@@ -114,6 +115,33 @@ function Confirmsenddata() {
                 <h2 className="text-2xl">ยืนยันการส่งข้อมูล</h2>
 
                 <Profile />
+
+                {typeAccountRegist === 'D' ? (
+                  <>
+                    <h4 className="text-xl">ข้อมูลผู้แทน</h4>
+                    <hr />
+                    <div className="grid grid-cols-2 gap-8 ">
+                      <div className="grid-flow-row gap-[0.5rem] ">
+                        <div className="text-sm font-bold my-1 ">ประเภทผู้แทน</div>
+                        <div>ผู้ทำบัญชี</div>
+                      </div>
+                      <div className="grid-flow-row gap-[0.5rem] ">
+                        <div className="text-sm font-bold my-1 ">เอกสารแนบ</div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            ชื่อเอกสารแนบ
+                          </div>
+                          <Link className="w-4 h-4 bg-purple-400 text-white p-2 rounded-lg " title='คลิกเพื่อดูเอกสาร' >
+                            <AiOutlineSearch></AiOutlineSearch>
+                          </Link>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </>
+                  ) : ""
+                }
+
                 <h4 className="text-xl">ข้อมูลบัญชี</h4>
                 <hr />
                 <div className="grid grid-cols-3 gap-8 ">
@@ -139,8 +167,8 @@ function Confirmsenddata() {
 
                 <div className="my-4 flex justify-end mt-8">
                   <Link
-                    className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "
-                    to="/informationaccount"
+                    className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg " 
+                    to={`/informationaccount/${typeAccountRegist}`}
                   >
                     ย้อนกลับ
                   </Link>

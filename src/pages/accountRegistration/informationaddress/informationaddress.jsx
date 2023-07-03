@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link , useParams} from "react-router-dom";
 import Content from "../../../components/layout/Content";
 import InformationaddressForm from "../../../components/propsPage/informationaddressForm";
 import { TbGavel } from "react-icons/tb";
@@ -13,6 +13,13 @@ function Infomationaddress() {
     id: 0,
     name: "Chidume Nnamdi",
     age: 54,
+  };
+ 
+  const {typeAccountRegist} = useParams();
+
+  //validate here
+  const validateInfomationaddress = () => {
+    window.location.href = `/informationaccount/${typeAccountRegist}`;
   };
 
   return (
@@ -119,16 +126,15 @@ function Infomationaddress() {
                   <InformationaddressForm user={user} />
                   <div className="my-4 flex justify-end mt-8">
                     <Link
-                      className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "
-                      to="/informationperson"
+                      className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg " 
+                      to={`/informationperson/${typeAccountRegist}`}
                     >
                       ย้อนกลับ
                     </Link>
                     <Link
                       className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
                                     text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                      to="/informationaccount"
-                    >
+                    onClick={() => validateInfomationaddress()} >
                       ดำเนินการต่อ
                     </Link>
                   </div>
