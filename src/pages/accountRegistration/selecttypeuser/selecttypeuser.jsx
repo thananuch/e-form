@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Content from "../../../components/layout/Content";
@@ -10,7 +10,6 @@ import NormalPerson from "../../../asseets/images/normalPerson.png";
 import DelegatePerson from "../../../asseets/images/delegatePerson.png";
 
 function Selecttypeuser() {
-
   const [typeAccountRegist, setTypeAccountRegist] = useState("");
 
   const selectChannelRegist = (event) => {
@@ -152,7 +151,7 @@ function Selecttypeuser() {
                             type="radio"
                             value="N"
                             name="bordered-radio"
-                            className="w-5 h-5 my-4 border-white outline-blue-50 bg-gray-100 focus:bg-blue-500 focus:outline-none ring-blue-500 "
+                            className="w-5 h-5 my-4 border-white outline-blue-50 bg-gray-100 focus:bg-blue-500 focus:outline-none ring-blue-500 cursor-pointer"
                             onChange={selectChannelRegist}
                           />
                           <label
@@ -186,12 +185,12 @@ function Selecttypeuser() {
                             type="radio"
                             value="D"
                             name="bordered-radio"
-                            className="w-5 h-5 my-4 border-white outline-blue-50 bg-gray-100 focus:bg-blue-500 focus:outline-none ring-blue-500 "
+                            className="w-5 h-5 my-4 border-white outline-blue-50 bg-gray-100 focus:bg-blue-500 focus:outline-none ring-blue-500 cursor-pointer"
                             onChange={selectChannelRegist}
                           />
                           <label
                             htmlFor="bordered-radio-2"
-                            className="w-full my-4 ml-2 text-2xl text-white  "
+                            className="w-full my-4 ml-2 text-2xl text-white"
                           >
                             เลือก
                           </label>
@@ -210,7 +209,8 @@ function Selecttypeuser() {
                   <Link
                     className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
                           text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                    onClick={() => validateSelectTypeAccountRegist()} >
+                    onClick={() => validateSelectTypeAccountRegist()}
+                  >
                     ดำเนินการต่อ
                   </Link>
                 </div>

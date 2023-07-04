@@ -22,6 +22,7 @@ import Swal from "sweetalert2";
 function Loginpage() {
   const images = [slide1Img, slide2Img, slide3Img];
 
+  //Custom next arrow  images
   const CustomNextArrow = (props) => {
     const { onClick } = props;
     return (
@@ -33,7 +34,7 @@ function Loginpage() {
       </div>
     );
   };
-
+  //Custom prev arrow  images
   const CustomPrevArrow = (props) => {
     const { onClick } = props;
     return (
@@ -46,6 +47,7 @@ function Loginpage() {
     );
   };
 
+  //slider settings
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -93,7 +95,6 @@ function Loginpage() {
   let [password, setPassword] = useState("");
 
   let [passwordType, setPasswordType] = useState("password");
-
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -281,7 +282,10 @@ function Loginpage() {
                   NDID
                 </div>
               </Link>
-              <Link className="self-stretch rounded-980xl bg-purple-bg flex flex-row py-[0.5rem] px-[2rem] items-center justify-center gap-[0.5rem]">
+              <Link
+                className="self-stretch rounded-980xl bg-purple-bg flex flex-row py-[0.5rem] px-[2rem] items-center justify-center gap-[0.5rem]"
+                to="/termsconditions"
+              >
                 <img
                   className="relative w-[1.5rem] h-[1.5rem] object-cover"
                   alt="thaiId"

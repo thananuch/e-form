@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link , useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Content from "../../../components/layout/Content";
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
 import { MdBallot } from "react-icons/md";
+import Swal from "sweetalert2";
 import {
   AiFillSave,
   AiOutlineCheck,
@@ -12,14 +13,9 @@ import {
 } from "react-icons/ai";
 
 function Informationaccount() {
-
-  const {typeAccountRegist} = useParams();
-
-  
-
+  const { typeAccountRegist } = useParams();
+  //show password
   const [passwordInputText, setPasswordInputText] = useState("password");
-  const [passwordInputConfirmText, setPasswordInputConfirmText] =  useState("password");
-
   const toggleInputPassword = () => {
     if (passwordInputText === "password") {
       setPasswordInputText("text");
@@ -28,17 +24,50 @@ function Informationaccount() {
     setPasswordInputText("password");
   };
 
-  const toggleInputPasswordConfirm = () => {
-    if (passwordInputConfirmText === "password") {
-      setPasswordInputConfirmText("text");
-      return;
-    }
-    setPasswordInputConfirmText("password");
+  //New password
+  const [passwordText, setPasswordtext] = useState("");
+  const passwordHandleChange = (event) => {
+    setPasswordtext(event.target.value);
+    console.log(passwordText);
   };
 
+  //show password Confirm
+  const [confirmPasswordInputText, setConfirmPasswordInputText] =
+    useState("password");
+  const toggleInputPasswordConfirm = () => {
+    if (confirmPasswordInputText === "password") {
+      setConfirmPasswordInputText("text");
+      return;
+    }
+    setConfirmPasswordInputText("password");
+  };
+
+  //Confirm password
+  const [confirmPasswordText, setConfirmPasswordtext] = useState("");
+  const confirmPasswordHandleChange = (event) => {
+    setConfirmPasswordtext(event.target.value);
+    console.log(confirmPasswordText);
+  };
+
+  //show text error compare password
+  const [formError, setFormError] = useState("");
 
   const validateInformationaccount = () => {
-    
+    //Check compare password
+    if (confirmPasswordText !== passwordText) {
+      setFormError("รหัสผ่าน กับ ยืนยันรหัสผ่าน ไม่ตรงกัน");
+      return;
+    }
+    //Check null password
+    if (passwordText === null || passwordText === "") {
+      Swal.fire({
+        title: "แจ้งเตือน",
+        text: "กรุณาระบุรหัสผ่าน",
+        icon: "warning",
+        confirmButtonText: "ตกลง",
+      });
+      return;
+    }
     window.location.href = `/confirmsenddata/${typeAccountRegist}`;
   };
 
@@ -180,6 +209,8 @@ function Informationaccount() {
                         placeholder="ระบุ รหัสผ่าน"
                         className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
                         type={passwordInputText}
+                        value={passwordText}
+                        onChange={passwordHandleChange}
                       />
                       <div className="absolute left-[95%] top-[50%] ">
                         <Link
@@ -208,14 +239,16 @@ function Informationaccount() {
                       <input
                         placeholder="ระบุ ยืนยันรหัสผ่าน"
                         className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                        type={passwordInputConfirmText}
+                        type={confirmPasswordInputText}
+                        value={confirmPasswordText}
+                        onChange={confirmPasswordHandleChange}
                       />
                       <div className="absolute left-[95%] top-[50%] ">
                         <Link
                           className="[border:none] cursor-pointer"
                           onClick={toggleInputPasswordConfirm}
                         >
-                          {passwordInputConfirmText === "text" ? (
+                          {confirmPasswordInputText === "text" ? (
                             <AiOutlineEye
                               size={20}
                               className="align-middle text-black"
@@ -228,6 +261,9 @@ function Informationaccount() {
                           )}
                         </Link>
                       </div>
+                      <p className="text-[0.875rem] m-0 p-0 text-[#EE4B2B]">
+                        {formError}
+                      </p>
                     </div>
                   </div>
 
@@ -241,7 +277,7 @@ function Informationaccount() {
                     <Link
                       className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
                                     text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                      onClick={() => validateInformationaccount()} 
+                      onClick={() => validateInformationaccount()}
                     >
                       ดำเนินการต่อ
                     </Link>

@@ -1,6 +1,4 @@
-import React,{useState} from "react";
-import { Link,useParams  } from "react-router-dom";
-import Swal from "sweetalert2";
+import React from "react";
 import "react-calendar/dist/Calendar.css";
 import Content from "../../../components/layout/Content";
 import InformationpersonForm from "../../../components/propsPage/informationpersonForm";
@@ -8,30 +6,8 @@ import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
 import { MdBallot } from "react-icons/md";
 import { AiFillSave, AiOutlineCheck } from "react-icons/ai";
-import { BsFillCloudArrowUpFill } from 'react-icons/bs';
 
 function Informationperson() {
-  const {typeAccountRegist} = useParams();
-
-  const [typeDelegate , setTypeDelegate] = useState('');
-
-  const validateInformationpersont = () => {
-    
-    if (typeAccountRegist === "D") {
-      if(typeDelegate === "0"){
-        Swal.fire({
-          icon: "warning",
-          title: "แจ้งเตือน",
-          text: "โปรดเลือกประเภทผู้แทน",
-          confirmButtonText: "ตกลง",
-        });
-        return;
-      }
-     
-    }
-    window.location.href = `/informationaddress/${typeAccountRegist}`;
-  };
-
   return (
     <>
       <Content />
@@ -135,64 +111,6 @@ function Informationperson() {
               <div className="w-full bg-white p-4 rounded-3xl drop-shadow-[0_2px_10px_rgba(36,36,36,0.1)]">
                 <div className="w-[90%] mx-auto">
                   <InformationpersonForm />
-                  
-                  { typeAccountRegist === 'D' ?
-                      (
-                        <>
-                        <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 mt-4">
-                          <div>
-                            <div className="text-sm my-1 ">
-                              ประเภทผู้แทน
-                              <span className="text-red-500">*</span>
-                            </div>
-                            <div className="flex flex-row">
-                              <select value={typeDelegate} onChange={(e) => setTypeDelegate(e.target.value)}
-                                placeholder="เลือกประเภทผู้แทน" 
-                                className="[border:none] outline-none bg-style-1-eef0f6 w-full rounded-xl py-3 px-3 " >
-                                <option value={0}>เลือกประเภทผู้แทน</option>
-                                <option value={1}>ผู้ทำบัญชี</option>
-                                <option value={2}>ผู้สอบบัญชี</option>
-                                <option value={3}>ผู้บังคับหลักประกัน</option>
-                                <option value={4}>หัวหน้าสำนักงานบัญชีคุณภาพ</option>
-                                <option value={5}>ผู้รับรองลายมือชื่อบริษัทมหาชน</option>
-                                <option value={6}>สมาชิกเนติบัณฑิตยสภา</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-
-                        {typeDelegate === '6' ? 
-                          <div class='grid grid-cols-2 gap-8 mt-4'>
-                            <label for='delegate-file' class='flex flex-col items-center justify-center w-full h-52 border-none rounded-lg cursor-pointer bg-gradient-to-bl from-[#D5D7EE] to-[#E6E4F5] '>
-                                <div class='flex flex-col items-center justify-center pt-5 pb-6'>
-                                    <BsFillCloudArrowUpFill className='text-[#343D6B]' size={80} />
-                                    <p class='my-0 text-xl text-[#343D6B] '><span class='font-semibold'>ลากไฟล์และวางที่นี่</span> </p>
-                                    <p class='text-lg text-[#343D6B] '>หรือคลิกเพื่ออัพโหลดไฟล์</p>
-                                </div>
-                                <input id='delegate-file' type='file' class='hidden' />
-                            </label>
-                          </div>  
-                          : ''
-                        }
-                        </>
-                      ) : ""
-                  }
-                    
-
-                  <div className="my-4 flex justify-end mt-8">
-                    <Link
-                      className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "
-                      to="/selecttypeuser"
-                    >
-                      ย้อนกลับ
-                    </Link>
-                    <Link
-                      className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA] border-none 
-                                text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                      onClick={() => validateInformationpersont()} >
-                      ดำเนินการต่อ
-                    </Link>
-                  </div>
                 </div>
               </div>
             </form>

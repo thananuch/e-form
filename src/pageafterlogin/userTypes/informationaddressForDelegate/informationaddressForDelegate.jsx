@@ -8,13 +8,6 @@ import { MdBallot } from "react-icons/md";
 import { AiFillSave, AiOutlineCheck } from "react-icons/ai";
 
 function InformationaddressForDelegate() {
-  //Test
-  const user = {
-    id: 0,
-    name: "Chidume Ni",
-    age: 54,
-  };
-
   return (
     <>
       <Content />
@@ -106,7 +99,7 @@ function InformationaddressForDelegate() {
               <div className="w-full mb-8 rounded-3xl shadow-[0px_2px_10px_rgba(36,36,36,0.1)] ">
                 <div className="w-[90%] mx-auto">
                   <div className="w-full my-4 py-4">
-                    <InformationaddressForm user={user} />
+                    <InformationaddressForm />
                     <div className="my-4 flex justify-end mt-8">
                       <Link
                         className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "

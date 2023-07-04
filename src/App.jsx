@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import LoadingSpinner from "./components/loading/LoadingSpinner.jsx";
+import LoadingSpinner from "./components/loading/LoadingSpinner";
 //Routes
 const Loginpage = lazy(() => import("./pages/login/loginpage"));
 const LoginThaiId = lazy(() => import("./pages/loginThaId/loginThaId"));

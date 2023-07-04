@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Content from "../../../components/layoutAfterLogin/Content";
 import Navigation from "../../../components/layoutAfterLogin/Navigation";
 import InformationpersonForm from "../../../components/propsPage/informationpersonForm";
@@ -77,7 +76,7 @@ function Editinformationperson() {
                 <div className="w-[90%] mx-auto">
                   <div className="w-full my-4 py-4">
                     <InformationpersonForm />
-                    <div className="my-4 flex justify-end mt-8">
+                    {/* <div className="my-4 flex justify-end mt-8">
                       <Link
                         className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA] border-none 
                                         text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
@@ -85,7 +84,7 @@ function Editinformationperson() {
                       >
                         ดำเนินการต่อ
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

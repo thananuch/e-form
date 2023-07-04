@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Link } from "react-router-dom";
 import {
   AiFillLock,
@@ -10,14 +10,15 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 import { TbMailForward, TbUserExclamation } from "react-icons/tb";
 import Swal from "sweetalert2";
 import Backbackcard from "../../asseets/images/backbackcard.png";
-import OTPInput from "react-otp-input";
-import "./ForgotPassword.css";
 import close from "../../asseets/images/close.png";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import styles from "../../components/calendar/Calendar.module.css";
+import OTPInput from "react-otp-input";
+
+export const AppContext = createContext(null);
 
 function ForgotPasswordModalForm({ isVisible, onClose }) {
   const [showStep1, setShowStep1] = useState(true);
@@ -32,8 +33,9 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   console.log(typeChannelForgotPass);
   //ระบุรหัสผู้ใช้
   const [userOrIdCard, setUserOrIdCard] = useState("");
+  console.log(userOrIdCard);
 
-  const selectChannelForgotPass = (event) => {
+  const slelctChannelForgotPass = (event) => {
     setTypeChannelForgotPass(event.target.value);
   };
 
@@ -114,7 +116,16 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
     setShowStep5(false);
   };
 
+  //show text error compare password
+  const [formError, setFormError] = useState("");
+
   const nextStep4To5 = () => {
+    //Check compare password
+    if (confirmPasswordText !== newPasswordText) {
+      setFormError("รหัสผ่านใหม่ กับ ยืนยันรหัสผ่าน ไม่ตรงกัน");
+      return;
+    }
+    //Check null password
     if (newPasswordText === null || newPasswordText === "") {
       Swal.fire({
         title: "แจ้งเตือน",
@@ -144,6 +155,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
         }
       });
     }
+    return;
   };
 
   //Send OTP
@@ -243,12 +255,12 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                     <input
                       value={userOrIdCard}
                       onChange={(e) => setUserOrIdCard(e.target.value)}
-                      className=" mt-3 block bg-[#EEF0F6] w-[95%] rounded-lg py-3 pl-3 focus:outline-blue-400 mx-auto border-none"
+                      className="mt-3 block bg-[#EEF0F6] w-[95%] rounded-lg py-3 pl-3 focus:outline-blue-400 mx-auto border-none"
                       type="text"
                     />
                     <button
                       className="mt-8 inline-block bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none 
-                             text-white text-base justify-center text-center w-auto h-10 rounded-3xl px-10 py-1 m-10"
+                             text-white text-base justify-center text-center w-auto h-10 rounded-3xl px-10 py-1 m-10 cursor-pointer"
                       onClick={() => nextStep1To2()}
                     >
                       ถัดไป
@@ -263,7 +275,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         className="hidden"
                         value="1"
                         name="forgotCahannel"
-                        onChange={selectChannelForgotPass}
+                        onChange={slelctChannelForgotPass}
                       />
                       <label
                         htmlFor="forgotChannel1"
@@ -292,9 +304,9 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               />
                             </div>
                           </div>
-                          <div className="basis-[60%] mx-auto justify-start items-start text-left ">
+                          <div className="basis-[60%] mx-auto justify-start items-start text-left cursor-pointer">
                             <h3
-                              className={`font-bold mb-0 ${
+                              className={`font-bold mb-0  ${
                                 typeChannelForgotPass === "1"
                                   ? "text-[#274082]"
                                   : "text-[#565656]"
@@ -325,7 +337,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         value="2"
                         className="hidden"
                         name="forgotCahannel"
-                        onChange={selectChannelForgotPass}
+                        onChange={slelctChannelForgotPass}
                       />
                       <label
                         htmlFor="forgotChannel2"
@@ -354,7 +366,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               />
                             </div>
                           </div>
-                          <div className="basis-[60%] mx-auto justify-start items-start text-left ">
+                          <div className="basis-[60%] mx-auto justify-start items-start text-left cursor-pointer">
                             <h3
                               className={`font-bold mb-0 ${
                                 typeChannelForgotPass === "2"
@@ -387,7 +399,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         className="hidden"
                         value="3"
                         name="forgotCahannel"
-                        onChange={selectChannelForgotPass}
+                        onChange={slelctChannelForgotPass}
                       />
                       <label
                         htmlFor="forgotChannel3"
@@ -416,7 +428,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               />
                             </div>
                           </div>
-                          <div className="basis-[60%] mx-auto justify-start items-start text-left ">
+                          <div className="basis-[60%] mx-auto justify-start items-start text-left cursor-pointer">
                             <h3
                               className={`font-bold mb-0 ${
                                 typeChannelForgotPass === "3"
@@ -479,6 +491,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                       </div>
                       <div className="w-full h-12 mx-auto justify-center flex  text-[#000] font-bold mt-3">
                         <OTPInput
+                          otp={OTP}
                           onChange={OtpHandleChange}
                           value={OTP}
                           inputStyle="inputStyle"
@@ -489,7 +502,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                       </div>
                       <button
                         className="bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none mt-8
-                      text-white text-lg  w-full sm:w-[40%] h-auto rounded-3xl px-10 py-2 text-center m-5"
+                      text-white text-lg  w-full sm:w-[40%] h-auto rounded-3xl px-10 py-2 text-center m-5 cursor-pointer"
                         onClick={() => nextStep3To4()}
                       >
                         ยืนยันรหัสผ่าน
@@ -899,7 +912,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                       <div className="items-center justify-center text-center mx-auto">
                         <button
                           className="inline-block bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none mt-8
-                                text-white text-lg justify-center text-center sm:w-[30%] w-full  h-auto rounded-3xl px-10 py-3 "
+                                text-white text-lg justify-center text-center sm:w-[30%] w-full  h-auto rounded-3xl px-10 py-3 cursor-pointer"
                           onClick={() => nextStep3To4Pass()}
                         >
                           บันทึกข้อมูล
@@ -982,6 +995,9 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               </Link>
                             </div>
                           </div>
+                          <p className="text-[0.875rem] m-0 p-0 text-[#EE4B2B]">
+                            {formError}
+                          </p>
                           <div className="flex justify-center mt-3">
                             <div className="w-full bg-[#E5EBFB] rounded-xl text-[#274082] ">
                               <div className="px-2 py-6">
@@ -1007,7 +1023,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                       <div className="items-center justify-center text-center">
                         <button
                           className="inline-block bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none mt-8
-                                text-white text-lg justify-center text-center w-full sm:w-[35%] h-auto rounded-3xl px-5 py-3"
+                                text-white text-lg justify-center text-center w-full sm:w-[35%] h-auto rounded-3xl px-5 py-3 cursor-pointer"
                           onClick={() => nextStep4To5()}
                         >
                           บันทึกข้อมูล
@@ -1028,7 +1044,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                         <Link
                           className="inline-block bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none mt-8
                                   text-white text-lg justify-center text-center w-[40%] h-auto rounded-3xl px-10 py-3 "
-                          onClick={() => window.location.reload(false)}
+                          to="/member/home"
                         >
                           ดำเนินการยืนยันตัวตน
                         </Link>

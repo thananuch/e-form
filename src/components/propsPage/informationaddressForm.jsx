@@ -1,8 +1,6 @@
 import React from "react";
 
 function InformationaddressForm(props) {
-  //Test
-  const user = props.user;
   return (
     <>
       <h2 className="text-xl font-bold">ข้อมูลการติดต่อ และ ที่อยู่</h2>
@@ -30,7 +28,6 @@ function InformationaddressForm(props) {
             maxLength="10"
             className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
             type="text"
-            value={user.name}
           />
         </div>
       </div>

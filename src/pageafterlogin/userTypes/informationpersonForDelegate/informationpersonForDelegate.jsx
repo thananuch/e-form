@@ -106,7 +106,15 @@ function InformationpersonForDelegate() {
                             className="[border:none] outline-none bg-style-1-eef0f6 w-full rounded-xl py-3 px-3 cursor-pointer"
                           >
                             <option value={0}>เลือกประเภทผู้แทน</option>
-                            <option value={1}>เลือกประเภทผู้แทน</option>
+                            <option value={1}>ผู้ทำบัญชี</option>
+                            <option value={2}>ผู้สอบบัญชี</option>
+                            <option value={3}>ผู้บังคับหลักประกัน</option>
+                            <option value={4}>
+                              หัวหน้าสำนักงานบัญชีคุณภาพ
+                            </option>
+                            <option value={5}>
+                              ผู้รับรองลายมือชื่อบริษัทมหาชน
+                            </option>
                           </select>
                         </div>
                       </div>
