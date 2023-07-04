@@ -1,5 +1,4 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
 import Content from "../../../components/layout/Content";
 import InformationaddressForm from "../../../components/propsPage/informationaddressForm";
 import { TbGavel } from "react-icons/tb";
@@ -8,13 +7,6 @@ import { MdBallot } from "react-icons/md";
 import { AiFillSave, AiOutlineCheck } from "react-icons/ai";
 
 function Infomationaddress() {
-  const { typeAccountRegist } = useParams();
-
-  //validate here
-  const validateInfomationaddress = () => {
-    window.location.href = `/informationaccount/${typeAccountRegist}`;
-  };
-
   return (
     <>
       <Content />
@@ -117,21 +109,6 @@ function Infomationaddress() {
               <div className="w-[90%] mx-auto">
                 <div className="w-full mt-4">
                   <InformationaddressForm />
-                  <div className="my-4 flex justify-end mt-8">
-                    <Link
-                      className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "
-                      to={`/informationperson/${typeAccountRegist}`}
-                    >
-                      ย้อนกลับ
-                    </Link>
-                    <Link
-                      className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
-                                    text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                      onClick={() => validateInfomationaddress()}
-                    >
-                      ดำเนินการต่อ
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>

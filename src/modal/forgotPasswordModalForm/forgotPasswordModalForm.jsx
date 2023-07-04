@@ -26,12 +26,12 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   const [showStep3, setShowStep3] = useState(false);
   const [showStep4, setShowStep4] = useState(false);
   const [showStep5, setShowStep5] = useState(false);
-  //มี 2 Type 1 ไทย/2ต่างชาติ
+  //have 2 Type 1 TH/2 EN
   const [idCardType, setIdCardType] = useState("");
-  //มี 3 Type
+  //have 3 Type
   const [typeChannelForgotPass, setTypeChannelForgotPass] = useState("");
   console.log(typeChannelForgotPass);
-  //ระบุรหัสผู้ใช้
+
   const [userOrIdCard, setUserOrIdCard] = useState("");
   console.log(userOrIdCard);
 
@@ -67,7 +67,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
     setShowStep5(false);
     setShowStep1(false);
 
-    //ถ้าเริ่มด้วยตัวเลข
+    //if start number
     if (!startsWithNumber(userOrIdCard)) {
       setIdCardType("2");
     } else {

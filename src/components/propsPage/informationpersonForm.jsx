@@ -13,6 +13,7 @@ function InformationpersonForm() {
   const { typeAccountRegist } = useParams();
   const [typeDelegate, setTypeDelegate] = useState("");
 
+  //Calendar
   const [showCalendar, setshowCalendar] = useState(false);
   const toggleDateCalendar = (e) => {
     e.preventDefault();
@@ -28,7 +29,6 @@ function InformationpersonForm() {
     setshowCalendar(false);
   };
 
-  //check error
   const [idCard, setIdCard] = useState("");
   const [laserId, setLaserId] = useState("");
   const [title, setTitle] = useState("");
@@ -36,44 +36,40 @@ function InformationpersonForm() {
   const [name_EN, setName_EN] = useState("");
   const [lastname_TH, setLastName_TH] = useState("");
   const [lastname_EN, setLastName_EN] = useState("");
-
-  const [errorIdCard, setErrorIdCard] = useState(null);
-  const [errorLaserId, setErrorLaserId] = useState(null);
-  const [errorBirthDate, setErrorBirthDate] = useState(null);
-  const [errorTitle, setErrorTitle] = useState(null);
-  const [errorName_TH, setErrorName_TH] = useState(null);
-  const [errorName_EN, setErrorName_EN] = useState(null);
-  const [errorLastName_TH, setErrorLastName_TH] = useState(null);
-  const [errorLastName_EN, setErrorLastName_EN] = useState(null);
-
+  //errors filed
+  const [errors, setErrors] = useState({});
+  //validate
   const validateInformationperson = () => {
-    let errors = {};
+    const errors = {};
     if (idCard === null || idCard.trim() === "") {
-      setErrorIdCard("กรุณากรอกเลขบัตรประจำตัวประชาชน");
+      errors.idCard = "กรุณากรอกเลขบัตรประจำตัวประชาชน";
     }
     if (laserId === null || laserId.trim() === "") {
-      setErrorLaserId("กรุณากรอกรหัสหลังบัตรประชาชน");
+      errors.laserId = "กรุณากรอกรหัสหลังบัตรประชาชน";
     }
     if (dateState === null || dateState.trim() === "") {
-      setErrorBirthDate("กรุณากรอกวันเดือนปีเกิด");
+      errors.dateState = "กรุณากรอกวันเดือนปีเกิด";
     }
     if (title === null || title.trim() === "") {
-      setErrorTitle("กรุณากรอกคำนำหน้าชื่อ");
+      errors.title = "กรุณากรอกคำนำหน้าชื่อ";
     }
     if (name_TH === null || name_TH.trim() === "") {
-      setErrorName_TH("กรุณากรอกชื่อ");
-    }
-    if (name_EN === null || name_EN.trim() === "") {
-      setErrorName_EN("กรุณากรอกชื่อภาษาอังกฤษ");
+      errors.name_TH = "กรุณากรอกชื่อ";
     }
     if (lastname_TH === null || lastname_TH.trim() === "") {
-      setErrorLastName_TH("กรุณากรอกนามสกุล");
+      errors.lastname_TH = "กรุณากรอกนามสกุล";
+    }
+    if (name_EN === null || name_EN.trim() === "") {
+      errors.name_EN = "กรุณากรอกชื่อภาษาอังกฤษ";
     }
     if (lastname_EN === null || lastname_EN.trim() === "") {
-      setErrorLastName_EN("กรุณากรอกนามสกุลภาษาอังกฤษ");
-      return errors;
+      errors.lastname_EN = "กรุณากรอกนามสกุลภาษาอังกฤษ";
     }
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
+  const handleSubmit = () => {
     if (typeAccountRegist === "D") {
       if (typeDelegate === "" || typeDelegate === "0") {
         Swal.fire({
@@ -85,7 +81,11 @@ function InformationpersonForm() {
         return;
       }
     }
-    window.location.href = `/informationaddress/${typeAccountRegist}`;
+
+    const isValid = validateInformationperson();
+    if (isValid) {
+      window.location.href = `/informationaddress/${typeAccountRegist}`;
+    }
   };
 
   return (
@@ -108,17 +108,16 @@ function InformationpersonForm() {
               value={idCard || ""}
               onChange={(e) => setIdCard(e.target.value)}
               className={
-                errorIdCard === null || errorIdCard.trim() === ""
-                  ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-l-lg py-3 px-3"
-                  : "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                errors.idCard
+                  ? "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                  : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
               }
               type="text"
+              maxLength="13"
             />
             <div
               className={`w-40  flex justify-center items-center cursor-pointer text-[#222222] rounded-r-lg ${
-                errorIdCard === null || errorIdCard.trim() === ""
-                  ? "bg-[#EEF0F6]"
-                  : "bg-red-500 bg-opacity-10"
+                errors.idCard ? "bg-red-500 bg-opacity-10" : "bg-[#EEF0F6]"
               }`}
             >
               <Link
@@ -129,7 +128,7 @@ function InformationpersonForm() {
               </Link>
             </div>
           </div>
-          <p className="text-xs p-0 m-0 text-red-500">{errorIdCard}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.idCard}</p>
         </div>
 
         <div>
@@ -161,15 +160,15 @@ function InformationpersonForm() {
               dir="ltr"
               placeholder="ระบุ เลเซอร์ไอดี หลังบัตรประชาชนของท่าน"
               className={
-                errorLaserId === null || errorLaserId.trim() === ""
-                  ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-l-lg py-3 px-3"
-                  : "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                errors.laserId
+                  ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                  : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
               }
               value={laserId || ""}
               onChange={(e) => setLaserId(e.target.value)}
             />
           </div>
-          <p className="text-xs p-0 m-0 text-red-500">{errorLaserId}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.laserId}</p>
         </div>
       </div>
 
@@ -195,9 +194,9 @@ function InformationpersonForm() {
                 <input
                   dir="ltr"
                   className={
-                    errorBirthDate === null || errorBirthDate.trim() === ""
-                      ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-l-lg py-3 px-3"
-                      : "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                    errors.dateState
+                      ? "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                      : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
                   }
                   value={dateState || ""}
                   placeholder="ระบุ วันเดือนปีเกิด"
@@ -207,9 +206,9 @@ function InformationpersonForm() {
               {selectedDate && (
                 <div
                   className={`w-12 text-[#222222] rounded-r-lg justify-center flex items-center cursor-pointer ${
-                    errorBirthDate === null || errorBirthDate.trim() === ""
-                      ? "bg-[#EEF0F6]"
-                      : "bg-red-500 bg-opacity-10"
+                    errors.dateState
+                      ? "bg-red-500 bg-opacity-10"
+                      : "bg-[#EEF0F6]"
                   }`}
                   onClick={toggleDateCalendar}
                   dir="rtl"
@@ -230,7 +229,7 @@ function InformationpersonForm() {
               </div>
             )}
           </div>
-          <p className="text-xs p-0 m-0 text-red-500">{errorBirthDate}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.dateState}</p>
         </div>
       </div>
 
@@ -259,16 +258,16 @@ function InformationpersonForm() {
             value={title || ""}
             onChange={(e) => setTitle(e.target.value)}
             className={
-              errorTitle === null || errorTitle.trim() === ""
-                ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3 text-sm"
-                : "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 text-sm text-[#D25656] placeholder-[#D25656]"
+              errors.title
+                ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 text-sm text-[#D25656] placeholder-[#D25656]"
+                : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3 text-sm"
             }
           >
             <option value={0}>เลือกคำนำหน้าชื่อ</option>
             <option value={1}>2</option>
             <option value={2}>3</option>
           </select>
-          <p className="text-xs p-0 m-0 text-red-500">{errorTitle}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.title}</p>
         </div>
       </div>
 
@@ -283,13 +282,13 @@ function InformationpersonForm() {
             value={name_TH || ""}
             onChange={(e) => setName_TH(e.target.value)}
             className={
-              errorName_TH === null || errorName_TH.trim() === ""
-                ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
-                : "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+              errors.name_TH
+                ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
             }
             type="text"
           />
-          <p className="text-xs p-0 m-0 text-red-500">{errorName_TH}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.name_TH}</p>
         </div>
         <div>
           <div className="text-sm my-1 ">ชื่อกลาง </div>
@@ -308,13 +307,13 @@ function InformationpersonForm() {
             value={lastname_TH || ""}
             onChange={(e) => setLastName_TH(e.target.value)}
             className={
-              errorLastName_TH === null || errorLastName_TH.trim() === ""
-                ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
-                : "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+              errors.lastname_TH
+                ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
             }
             type="text"
           />
-          <p className="text-xs p-0 m-0 text-red-500">{errorLastName_TH}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.lastname_TH}</p>
         </div>
       </div>
 
@@ -331,17 +330,17 @@ function InformationpersonForm() {
             value={name_EN || ""}
             onChange={(e) => setName_EN(e.target.value)}
             className={
-              errorName_EN === null || errorName_EN.trim() === ""
-                ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
-                : "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+              errors.name_EN
+                ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
             }
             type="text"
           />
-          <p className="text-xs p-0 m-0 text-red-500">{errorName_EN}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.name_EN}</p>
         </div>
 
         <div>
-          <div className="text-sm my-1 ">Middle name </div>
+          <div className="text-sm my-1 ">Middle name</div>
           <input
             placeholder="ระบุ ชื่อกลางภาษาอังกฤษ"
             className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
@@ -357,13 +356,13 @@ function InformationpersonForm() {
             value={lastname_EN || ""}
             onChange={(e) => setLastName_EN(e.target.value)}
             className={
-              errorLastName_EN === null || errorLastName_EN.trim() === ""
-                ? "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
-                : "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+              errors.lastname_EN
+                ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
             }
             type="text"
           />
-          <p className="text-xs p-0 m-0 text-red-500">{errorLastName_EN}</p>
+          <p className="text-xs p-0 m-0 text-red-500">{errors.lastname_EN}</p>
         </div>
       </div>
       {typeAccountRegist === "D" ? (
@@ -431,7 +430,7 @@ function InformationpersonForm() {
         <Link
           className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA] border-none 
                                 text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-          onClick={() => validateInformationperson()}
+          onClick={() => handleSubmit()}
         >
           ดำเนินการต่อ
         </Link>

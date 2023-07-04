@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Content from "../../../components/layoutAfterLogin/Content";
 import Navigation from "../../../components/layoutAfterLogin/Navigation";
 import InformationaddressForm from "../../../components/propsPage/informationaddressForm";
@@ -100,21 +99,6 @@ function InformationaddressForDelegate() {
                 <div className="w-[90%] mx-auto">
                   <div className="w-full my-4 py-4">
                     <InformationaddressForm />
-                    <div className="my-4 flex justify-end mt-8">
-                      <Link
-                        className="inline-block bg-[#E6E9F5] text-[#543FBF] justify-center text-center w-auto h-auto rounded-3xl px-10 py-3 mr-4 text-lg "
-                        to="/member/informationpersonForDelegate"
-                      >
-                        ย้อนกลับ
-                      </Link>
-                      <Link
-                        className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA] border-none 
-                                        text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                        to="/member/viewprofillefordelegate"
-                      >
-                        ดำเนินการต่อ
-                      </Link>
-                    </div>
                   </div>
                 </div>
               </div>

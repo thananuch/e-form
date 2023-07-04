@@ -4,71 +4,85 @@ import Content from "../../../components/layout/Content";
 import { TbGavel } from "react-icons/tb";
 import { RiFileUserFill } from "react-icons/ri";
 import { MdBallot } from "react-icons/md";
-import Swal from "sweetalert2";
 import {
   AiFillSave,
   AiOutlineCheck,
   AiOutlineEye,
   AiOutlineEyeInvisible,
 } from "react-icons/ai";
+import Swal from "sweetalert2";
 
 function Informationaccount() {
   const { typeAccountRegist } = useParams();
-  //show password
-  const [passwordInputText, setPasswordInputText] = useState("password");
-  const toggleInputPassword = () => {
-    if (passwordInputText === "password") {
-      setPasswordInputText("text");
-      return;
-    }
-    setPasswordInputText("password");
-  };
-
-  //New password
-  const [passwordText, setPasswordtext] = useState("");
+  //password
+  const [password, setPassword] = useState("");
   const passwordHandleChange = (event) => {
-    setPasswordtext(event.target.value);
-    console.log(passwordText);
+    setPassword(event.target.value);
+    console.log(password);
   };
-
-  //show password Confirm
-  const [confirmPasswordInputText, setConfirmPasswordInputText] =
-    useState("password");
-  const toggleInputPasswordConfirm = () => {
-    if (confirmPasswordInputText === "password") {
-      setConfirmPasswordInputText("text");
+  //show password
+  const [showpassword, setShowPassword] = useState("password");
+  const toggleInputPassword = () => {
+    if (showpassword === "password") {
+      setShowPassword("text");
       return;
     }
-    setConfirmPasswordInputText("password");
+    setShowPassword("password");
   };
 
   //Confirm password
-  const [confirmPasswordText, setConfirmPasswordtext] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const confirmPasswordHandleChange = (event) => {
-    setConfirmPasswordtext(event.target.value);
-    console.log(confirmPasswordText);
+    setConfirmPassword(event.target.value);
+    console.log(confirmPassword);
   };
 
-  //show text error compare password
-  const [formError, setFormError] = useState("");
-
-  const validateInformationaccount = () => {
-    //Check compare password
-    if (confirmPasswordText !== passwordText) {
-      setFormError("รหัสผ่าน กับ ยืนยันรหัสผ่าน ไม่ตรงกัน");
+  //show password Confirm
+  const [showConfirmPassword, setShowConfirmPassword] = useState("password");
+  const togglePasswordConfirm = () => {
+    if (showConfirmPassword === "password") {
+      setShowConfirmPassword("text");
       return;
     }
-    //Check null password
-    if (passwordText === null || passwordText === "") {
+    setShowConfirmPassword("password");
+  };
+
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  //errors filed
+  const [errors, setErrors] = useState({});
+
+  const validateInformationaccount = () => {
+    let errors = {};
+    if (userName === null || userName.trim() === "") {
+      errors.userName = "กรุณากรอกชื่อผู้ใช้งาน";
+    }
+    if (email === null || email.trim() === "") {
+      errors.email = "กรุณากรอกอีเมล";
+    }
+    if (password === null || password.trim() === "") {
+      errors.password = "กรุณากรอกรหัสผ่าน";
+    }
+    if (confirmPassword === null || confirmPassword.trim() === "") {
+      errors.confirmPassword = "กรุณากรอกยืนยันรหัสผ่าน";
+    }
+    if (password !== confirmPassword) {
       Swal.fire({
-        title: "แจ้งเตือน",
-        text: "กรุณาระบุรหัสผ่าน",
+        text: "รหัสผ่าน กับ ยืนยันรหัสผ่าน ไม่ตรงกัน",
         icon: "warning",
         confirmButtonText: "ตกลง",
       });
       return;
     }
-    window.location.href = `/confirmsenddata/${typeAccountRegist}`;
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const nextStep = () => {
+    const isValid = validateInformationaccount();
+    if (isValid) {
+      window.location.href = `/confirmsenddata/${typeAccountRegist}`;
+    }
   };
 
   return (
@@ -183,9 +197,18 @@ function Informationaccount() {
                       </div>
                       <input
                         placeholder="ระบุ ผู้ใช้งาน"
-                        className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
+                        value={userName || ""}
+                        onChange={(e) => setUserName(e.target.value)}
+                        className={
+                          errors.userName
+                            ? "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                            : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
+                        }
                         type="text"
                       />
+                      <p className="text-xs p-0 m-0 text-red-500">
+                        {errors.userName}
+                      </p>
                     </div>
 
                     <div>
@@ -194,9 +217,18 @@ function Informationaccount() {
                       </div>
                       <input
                         placeholder="ระบุ อีเมล"
-                        className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
+                        value={email || ""}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className={
+                          errors.email
+                            ? "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                            : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
+                        }
                         type="text"
                       />
+                      <p className="text-xs p-0 m-0 text-red-500">
+                        {errors.email}
+                      </p>
                     </div>
                   </div>
 
@@ -207,17 +239,21 @@ function Informationaccount() {
                       </div>
                       <input
                         placeholder="ระบุ รหัสผ่าน"
-                        className="[border:none] bg-style-1-eef0f6 block w-full  rounded-xl py-3 px-3 "
-                        type={passwordInputText}
-                        value={passwordText}
+                        type={showpassword}
+                        value={password || ""}
                         onChange={passwordHandleChange}
+                        className={
+                          errors.password
+                            ? "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                            : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
+                        }
                       />
                       <div className="absolute left-[95%] top-[50%] ">
                         <Link
                           className="[border:none] cursor-pointer"
                           onClick={toggleInputPassword}
                         >
-                          {passwordInputText === "text" ? (
+                          {showpassword === "text" ? (
                             <AiOutlineEye
                               size={20}
                               className="align-middle text-black"
@@ -230,6 +266,9 @@ function Informationaccount() {
                           )}
                         </Link>
                       </div>
+                      <p className="text-xs p-0 m-0 text-red-500">
+                        {errors.password}
+                      </p>
                     </div>
 
                     <div className="grid-flow-row gap-[0.5rem] relative">
@@ -238,17 +277,21 @@ function Informationaccount() {
                       </div>
                       <input
                         placeholder="ระบุ ยืนยันรหัสผ่าน"
-                        className="[border:none] bg-style-1-eef0f6 block w-full rounded-xl py-3 px-3 "
-                        type={confirmPasswordInputText}
-                        value={confirmPasswordText}
+                        type={showConfirmPassword}
+                        value={confirmPassword || ""}
                         onChange={confirmPasswordHandleChange}
+                        className={
+                          errors.confirmPassword
+                            ? "[border:none] outline-none block w-full rounded-l-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                            : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
+                        }
                       />
                       <div className="absolute left-[95%] top-[50%] ">
                         <Link
                           className="[border:none] cursor-pointer"
-                          onClick={toggleInputPasswordConfirm}
+                          onClick={togglePasswordConfirm}
                         >
-                          {confirmPasswordInputText === "text" ? (
+                          {showConfirmPassword === "text" ? (
                             <AiOutlineEye
                               size={20}
                               className="align-middle text-black"
@@ -261,8 +304,8 @@ function Informationaccount() {
                           )}
                         </Link>
                       </div>
-                      <p className="text-[0.875rem] m-0 p-0 text-[#EE4B2B]">
-                        {formError}
+                      <p className="text-xs p-0 m-0 text-red-500">
+                        {errors.confirmPassword}
                       </p>
                     </div>
                   </div>
@@ -277,7 +320,7 @@ function Informationaccount() {
                     <Link
                       className="inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA]
                                     text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3"
-                      onClick={() => validateInformationaccount()}
+                      onClick={() => nextStep()}
                     >
                       ดำเนินการต่อ
                     </Link>
