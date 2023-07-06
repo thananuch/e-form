@@ -143,14 +143,14 @@ function RenewDelegatePage() {
                                         </div>
                                     </div>
                                     <h3>อัพโหลดไฟล์หลักฐาน</h3>
-                                    <div class='grid grid-cols-2 gap-8'>
-                                        <label for='delegate-file' class='flex flex-col items-center justify-center w-full h-52 border-none rounded-lg cursor-pointer bg-gradient-to-bl from-[#D5D7EE] to-[#E6E4F5] '>
-                                            <div class='flex flex-col items-center justify-center pt-5 pb-6'>
+                                    <div className='grid grid-cols-2 gap-8'>
+                                        <label for='delegate-file' className='flex flex-col items-center justify-center w-full h-52 border-none rounded-lg cursor-pointer bg-gradient-to-bl from-[#D5D7EE] to-[#E6E4F5] '>
+                                            <div className='flex flex-col items-center justify-center pt-5 pb-6'>
                                                 <BsFillCloudArrowUpFill className='text-[#343D6B]' size={80} />
-                                                <p class='my-0 text-xl text-[#343D6B] '><span class='font-semibold'>ลากไฟล์และวางที่นี่</span> </p>
-                                                <p class='text-lg text-[#343D6B] '>หรือคลิกเพื่ออัพโหลดไฟล์</p>
+                                                <p className='my-0 text-xl text-[#343D6B] '><span className='font-semibold'>ลากไฟล์และวางที่นี่</span> </p>
+                                                <p className='text-lg text-[#343D6B] '>หรือคลิกเพื่ออัพโหลดไฟล์</p>
                                             </div>
-                                            <input id='delegate-file' type='file' class='hidden' />
+                                            <input id='delegate-file' type='file' className='hidden' />
                                         </label>
                                     </div> 
                                     <div className='my-4 flex justify-end mt-8'>

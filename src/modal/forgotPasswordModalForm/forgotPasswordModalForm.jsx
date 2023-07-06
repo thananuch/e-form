@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AiFillLock,
@@ -18,22 +18,46 @@ import { MdOutlineCalendarMonth } from "react-icons/md";
 import styles from "../../components/calendar/Calendar.module.css";
 import OTPInput from "react-otp-input";
 
-export const AppContext = createContext(null);
+
 
 function ForgotPasswordModalForm({ isVisible, onClose }) {
+
+  //check error
+  const [idCardNo , setIdCardNo] = useState("");
+  const [laserId, setLaserId] = useState("");
+  const [title, setTitle] = useState("");
+  const [name_TH, setName_TH] = useState("");
+  const [nameMid_TH, setNameMid_TH] = useState("");
+  const [name_EN, setName_EN] = useState("");
+  const [lastname_TH, setLastName_TH] = useState("");
+  const [nameMid_EN, setNameMid_EN] = useState("");
+  const [lastname_EN, setLastName_EN] = useState("");
+  const [mobile , setMobile] = useState("");
+  const [email , setEmail] = useState("");
+
+  const [errorIdCard, setErrorIdCard] = useState(null);
+  const [errorLaserId, setErrorLaserId] = useState(null);
+  const [errorBirthDate, setErrorBirthDate] = useState(null);
+  const [errorTitle, setErrorTitle] = useState(null);
+  const [errorName_TH, setErrorName_TH] = useState(null);
+  const [errorName_EN, setErrorName_EN] = useState(null);
+  const [errorLastName_TH, setErrorLastName_TH] = useState(null);
+  const [errorLastName_EN, setErrorLastName_EN] = useState(null);
+  const [errorMobile, setErrorMobile] = useState(null);
+  const [errorEmail, setErrorEmail] = useState(null);
+
+  // show layout
   const [showStep1, setShowStep1] = useState(true);
   const [showStep2, setShowStep2] = useState(false);
   const [showStep3, setShowStep3] = useState(false);
   const [showStep4, setShowStep4] = useState(false);
   const [showStep5, setShowStep5] = useState(false);
-  //มี 2 Type 1 ไทย/2ต่างชาติ
+  //มี 2 Type 1ไทย/2ต่างชาติ
   const [idCardType, setIdCardType] = useState("");
   //มี 3 Type
   const [typeChannelForgotPass, setTypeChannelForgotPass] = useState("");
-  console.log(typeChannelForgotPass);
   //ระบุรหัสผู้ใช้
   const [userOrIdCard, setUserOrIdCard] = useState("");
-  console.log(userOrIdCard);
 
   const slelctChannelForgotPass = (event) => {
     setTypeChannelForgotPass(event.target.value);
@@ -55,7 +79,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
     if (userOrIdCard === null || userOrIdCard === "") {
       Swal.fire({
         title: "แจ้งเตือน",
-        text: "กรุณาระบุรหัสผู้ใช้งาน",
+        text: "กรุณา ระบุรหัสผู้ใช้งาน / เลขบัตรประจำตัวประชาชน / Passport",
         icon: "warning",
         confirmButtonText: "ตกลง",
       });
@@ -109,6 +133,54 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   };
 
   const nextStep3To4Pass = () => {
+    let errors = {};
+    setErrorIdCard(null);
+    setErrorLaserId(null);
+    setErrorBirthDate(null);
+    setErrorTitle(null);
+    setErrorName_TH(null);
+    setErrorName_EN(null);
+    setErrorLastName_TH(null);
+    setErrorLastName_EN(null);
+    setErrorMobile(null);
+    setErrorEmail(null);
+
+    if (idCardNo === null || idCardNo.trim() === "") {
+      if(idCardType === "2"){
+        setErrorIdCard("กรุณากรอกเลขบัตรประจำตัวประชาชน");
+      }else{
+        setErrorIdCard("กรุณากรอกพาสปอต Passport");
+      }
+     
+    }
+    if (laserId === null || laserId.trim() === "") {
+      setErrorLaserId("กรุณากรอกรหัสหลังบัตรประชาชน");
+    }
+    if (dateState === null || dateState.trim() === "") {
+      setErrorBirthDate("กรุณากรอกวันเดือนปีเกิด");
+    }
+    if (title === null || title.trim() === "") {
+      setErrorTitle("กรุณากรอกคำนำหน้าชื่อ");
+    }
+    if (name_TH === null || name_TH.trim() === "") {
+      setErrorName_TH("กรุณากรอกชื่อ");
+    }
+    if (name_EN === null || name_EN.trim() === "") {
+      setErrorName_EN("กรุณากรอกชื่อภาษาอังกฤษ");
+    }
+    if (lastname_TH === null || lastname_TH.trim() === "") {
+      setErrorLastName_TH("กรุณากรอกนามสกุล");
+    }
+    if (lastname_EN === null || lastname_EN.trim() === "") {
+      setErrorLastName_EN("กรุณากรอกนามสกุลภาษาอังกฤษ"); 
+    }
+    if (mobile === null || mobile.trim() === "") {
+      setErrorMobile("กรุณากรอกเบอร์โทรศัพท์"); 
+    }
+    if (email === null || email.trim() === "") {
+      setErrorEmail("กรุณากรอกอีเมล");
+      return errors;
+    }
     setShowStep4(true);
     setShowStep1(false);
     setShowStep2(false);
@@ -120,19 +192,44 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   const [formError, setFormError] = useState("");
 
   const nextStep4To5 = () => {
+
+    if(newPasswordText.length < 8){
+      setFormError("รหัสผ่านใหม่ต้องมากกว่า 8 คัว");
+      return;
+    }
+
+    if(confirmPasswordText.length < 8){
+      setFormError("ยืนยันรหัสผ่านต้องมากกว่า 8 คัว");
+      return;
+    }
+    
     //Check compare password
     if (confirmPasswordText !== newPasswordText) {
       setFormError("รหัสผ่านใหม่ กับ ยืนยันรหัสผ่าน ไม่ตรงกัน");
       return;
     }
-    //Check null password
-    if (newPasswordText === null || newPasswordText === "") {
-      Swal.fire({
-        title: "แจ้งเตือน",
-        text: "กรุณาระบุรหัสผ่าน",
-        icon: "warning",
-        confirmButtonText: "ตกลง",
-      });
+
+    let hasUpper = false;
+    let hasLower = false;
+    let hasNumber = false;
+
+    let pwLength =newPasswordText.length;
+
+    for(let i = 0 ; i <pwLength ; i++){
+      if (!isNaN(newPasswordText.charAt(i) * 1)){
+        hasNumber = true ;
+      }else{
+        if(newPasswordText.charAt(i) === newPasswordText.charAt(i).toLocaleUpperCase()){
+          hasUpper = true ;
+        }
+        if(newPasswordText.charAt(i) === newPasswordText.charAt(i).toLocaleLowerCase()){
+          hasLower = true ;
+        }
+      }
+    }
+
+    if(!hasUpper || !hasLower || !hasNumber ){
+      setFormError("รูปแบบรหัสผ่านใหม่ไม่ถูกต้อง ควรมีตัวอักษรใหญ่ ตัวอักษรเล็ก และตัวเลข");
       return;
     }
 
@@ -157,12 +254,11 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
     }
     return;
   };
-
+  
   //Send OTP
   const [OTP, setOTP] = useState("");
   const OtpHandleChange = (OTP) => {
     setOTP(OTP);
-    console.log(OTP);
   };
 
   //refresh state
@@ -184,7 +280,6 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   const [newPasswordText, setNewPasswordtext] = useState("");
   const newPasswordHandleChange = (event) => {
     setNewPasswordtext(event.target.value);
-    console.log(newPasswordText);
   };
 
   //show password Confirm
@@ -202,7 +297,6 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
   const [confirmPasswordText, setConfirmPasswordtext] = useState("");
   const confirmPasswordHandleChange = (event) => {
     setConfirmPasswordtext(event.target.value);
-    console.log(confirmPasswordText);
   };
 
   //Date
@@ -569,10 +663,16 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               เลขประจำตัวประชาชน 13 หลัก
                               <span className="text-red-500">*</span>
                             </div>
-                            <input
+                            <input value={idCardNo || ""}
+                              onChange={(e) => setIdCardNo(e.target.value)}
                               placeholder="ระบุ เลขประจำตัวประชาชน 13 หลัก"
-                              className="block bg-[#EEF0F6] border-none p-2 rounded-md"
+                              className={
+                                errorIdCard === null || errorIdCard.trim() === ""
+                                  ? "block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
                             />
+                            <p className="text-xs p-0 m-0 text-red-500">{errorIdCard}</p>
                           </div>
 
                           <div className="grid grid-row-2 gap-2  relative">
@@ -611,10 +711,16 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                                 </span>
                               </div>
                             </div>
-                            <input
-                              placeholder="ระบุ เลขประจำตัว4ประชาชน 13 หลัก"
-                              className="block bg-[#EEF0F6] border-none p-2 rounded-md"
+                            <input value={laserId || ""}
+                              onChange={(e) => setLaserId(e.target.value)}
+                              placeholder="ระบุ กรอกรหัสหลังบัตรประชาชน"
+                              className={
+                                errorLaserId === null || errorLaserId.trim() === ""
+                                  ? "block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
                             />
+                            <p className="text-xs p-0 m-0 text-red-500">{errorLaserId}</p>
                           </div>
                         </div>
                         <div className="grid sm:grid-cols-2 grid-cols-1 gap-2 ">
@@ -628,7 +734,11 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                                 {selectedDate && (
                                   <input
                                     dir="ltr"
-                                    className="[border:none] outline-none bg-style-1-eef0f6 w-full rounded-l-lg p-2"
+                                    className={
+                                      errorBirthDate === null || errorBirthDate.trim() === ""
+                                        ? "block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                        : "block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                                    }
                                     value={dateState}
                                     placeholder="ระบุ วันเดือนปีเกิด"
                                     onChange={(e) =>
@@ -638,13 +748,17 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                                 )}
                                 {selectedDate && (
                                   <div
-                                    className="w-12 bg-[#EEF0F6] text-[#222222]  rounded-r-lg justify-center flex items-center cursor-pointer"
+                                    className={
+                                      errorBirthDate === null || errorBirthDate.trim() === ""
+                                        ? "w-12 bg-[#EEF0F6] text-[#222222]  rounded-r-lg justify-center flex items-center cursor-pointer"
+                                        : "w-12 rounded-r-lg justify-center flex items-center cursor-pointer border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                                    }
                                     onClick={toggleDateCalendar}
                                     dir="rtl"
                                   >
                                     <MdOutlineCalendarMonth size={30} />
                                   </div>
-                                )}
+                                )} 
                               </div>
                               {showCalendar && (
                                 <div className="relative">
@@ -657,6 +771,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                                   />
                                 </div>
                               )}
+                              <p className="text-xs p-0 m-0 text-red-500">{errorBirthDate}</p>
                             </div>
                           </div>
                         </div>
@@ -670,11 +785,22 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               คำนำหน้าชื่อ
                               <span className="text-red-500">*</span>
                             </div>
-                            <input
+                            <select
+                              value={title || ""}
+                              onChange={(e) => setTitle(e.target.value)}
                               placeholder="ระบุ คำนำหน้าชื่อ"
-                              className="block bg-[#EEF0F6] border-none p-2 rounded-md"
-                            />
-                          </div>
+                              className={
+                                errorTitle === null || errorTitle.trim() === ""
+                                  ? "block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
+                            >
+                              <option value={0}>เลือกคำนำหน้าชื่อ</option>
+                              <option value={1}>2</option>
+                              <option value={2}>3</option>
+                            </select>
+                            <p className="text-xs p-0 m-0 text-red-500">{errorTitle}</p>
+                          </div>                          
                         </div>
                         <div className="grid sm:grid-cols-3 grid-cols-1 gap-8 mt-4">
                           <div className="grid-flow-row gap-[0.5rem]">
@@ -682,14 +808,22 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               ชื่อ <span className="text-red-500">*</span>
                             </div>
                             <input
+                              value={name_TH || ""}
+                              onChange={(e) => setName_TH(e.target.value)}
                               placeholder="ระบุ ชื่อ"
-                              className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                              className={
+                                errorName_TH === null || errorName_TH.trim() === ""
+                                  ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
                               type="text"
                             />
+                            <p className="text-xs p-0 m-0 text-red-500">{errorName_TH}</p>
                           </div>
                           <div className="grid-flow-row gap-[0.5rem]">
                             <div className="text-sm text-[#000]">ชื่อกลาง </div>
-                            <input
+                            <input value={nameMid_TH || ""}
+                              onChange={(e) => setNameMid_TH(e.target.value)}
                               placeholder="ระบุ ชื่อกลาง"
                               className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md "
                               type="text"
@@ -700,10 +834,17 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               นามสกุุล <span className="text-red-500">*</span>
                             </div>
                             <input
+                              value={lastname_TH || ""}
+                              onChange={(e) => setLastName_TH(e.target.value)}
                               placeholder="ระบุ นามสกุล"
-                              className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                              className={
+                                errorLastName_TH === null || errorLastName_TH.trim() === ""
+                                  ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
                               type="text"
                             />
+                            <p className="text-xs p-0 m-0 text-red-500">{errorLastName_TH}</p>
                           </div>
                         </div>
                         <h4 className="text-base mt-6  font-bold  text-[#000]">
@@ -715,14 +856,22 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               ชื่อ <span className="text-red-500">*</span>
                             </div>
                             <input
+                              value={name_EN || ""}
+                              onChange={(e) => setName_EN(e.target.value)}
                               placeholder="ระบุ ชื่อ"
-                              className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                              className={
+                                errorName_EN === null || errorName_EN.trim() === ""
+                                  ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
                               type="text"
                             />
+                            <p className="text-xs p-0 m-0 text-red-500">{errorName_EN}</p>
                           </div>
                           <div className="grid-flow-row gap-[0.5rem]">
                             <div className="text-sm text-[#000]">ชื่อกลาง </div>
-                            <input
+                            <input value={nameMid_EN || ""}
+                              onChange={(e) => setNameMid_EN(e.target.value)}
                               placeholder="ระบุ ชื่อกลาง"
                               className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md "
                               type="text"
@@ -733,15 +882,22 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               นามสกุุล <span className="text-red-500">*</span>
                             </div>
                             <input
+                              value={lastname_EN || ""}
+                              onChange={(e) => setLastName_EN(e.target.value)}
                               placeholder="ระบุ นามสกุล"
-                              className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                              className={
+                                errorLastName_EN === null || errorLastName_EN.trim() === ""
+                                  ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
                               type="text"
                             />
+                            <p className="text-xs p-0 m-0 text-red-500">{errorLastName_EN}</p>
                           </div>
                         </div>
                         <div className="items-center justify-center text-center mx-auto">
                           <button
-                            className="inline-block bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none mt-8
+                            className="inline-block bg-gradient-to-b from-[#543FBF] to-[#576EBA] border-none mt-8 cursor-pointer
                                         text-white text-lg justify-center text-center sm:w-[30%] w-full h-auto rounded-3xl px-10 py-3 "
                             onClick={() => nextStep3To4Pass()}
                           >
@@ -762,10 +918,16 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                       <div className="grid sm:grid-cols-2 grid-cols-1 gap-2  text-[#000]">
                         <div className="grid grid-row-2 gap-2 ">
                           <div className="text-sm text-[#000]">Passport</div>
-                          <input
-                            placeholder="ระบุ Passport"
-                            className="block bg-[#EEF0F6] border-none p-2 rounded-md"
+                          <input value={idCardNo || ""}
+                            onChange={(e) => setIdCardNo(e.target.value)}
+                            placeholder="ระบุ Passport" 
+                            className={
+                              errorIdCard === null || errorIdCard.trim() === ""
+                                ? "block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorIdCard}</p>
                         </div>
                       </div>
                       <div className="text-base mt-6  font-bold  text-[#000]">
@@ -776,10 +938,21 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                           <div className="text-sm text-[#000]">
                             คำนำหน้าชื่อ
                           </div>
-                          <input
-                            placeholder="คำนำหน้าชื่อ"
-                            className="block bg-[#EEF0F6] border-none p-2 rounded-md"
-                          />
+                          <select
+                              value={title || ""}
+                              onChange={(e) => setTitle(e.target.value)}
+                              placeholder="ระบุ คำนำหน้าชื่อ"
+                              className={
+                                errorTitle === null || errorTitle.trim() === ""
+                                  ? "block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                  : "block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                              }
+                            >
+                              <option value={0}>เลือกคำนำหน้าชื่อ</option>
+                              <option value={1}>2</option>
+                              <option value={2}>3</option>
+                            </select>
+                            <p className="text-xs p-0 m-0 text-red-500">{errorTitle}</p>
                         </div>
                       </div>
 
@@ -788,15 +961,22 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                           <div className="text-sm my-1">
                             ชื่อ <span className="text-red-500">*</span>
                           </div>
-                          <input
+                          <input value={name_TH || ""}
+                            onChange={(e) => setName_TH(e.target.value)}
                             placeholder="ระบุ ชื่อ"
-                            className="block bg-[#EEF0F6] border-none p-2 rounded-md w-full"
                             type="text"
+                            className={
+                              errorName_TH === null || errorName_TH.trim() === ""
+                                ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorName_TH}</p>
                         </div>
                         <div className="grid-flow-row gap-[0.5rem]">
                           <div className="text-sm my-1">ชื่อกลาง </div>
-                          <input
+                          <input value={nameMid_TH|| ""}
+                            onChange={(e) => setNameMid_TH(e.target.value)}
                             placeholder="ระบุ ชื่อกลาง"
                             className="block bg-[#EEF0F6] border-none p-2 rounded-md w-full"
                             type="text"
@@ -806,11 +986,17 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                           <div className="text-sm my-1">
                             นามสกุุล <span className="text-red-500">*</span>
                           </div>
-                          <input
+                          <input value={lastname_TH || ""}
+                            onChange={(e) => setLastName_TH(e.target.value)}
                             placeholder="ระบุ นามสกุล"
-                            className="block bg-[#EEF0F6] border-none p-2 rounded-md w-full"
+                            className={
+                              errorLastName_TH === null || errorLastName_TH.trim() === ""
+                                ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                             type="text"
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorLastName_TH}</p>
                         </div>
                       </div>
 
@@ -822,15 +1008,22 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                           <div className="text-sm my-1 ">
                             Name <span className="text-red-500">*</span>
                           </div>
-                          <input
+                          <input value={name_EN || ""}
+                            onChange={(e) => setName_EN(e.target.value)}
                             placeholder="ระบุ ชื่อ"
-                            className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                            className={
+                              errorName_EN === null || errorName_EN.trim() === ""
+                                ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                             type="text"
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorName_EN}</p>
                         </div>
                         <div className="grid-flow-row gap-[0.5rem]">
                           <div className="text-sm my-1 ">Middle name </div>
-                          <input
+                          <input value={nameMid_EN || ""}
+                            onChange={(e) => setNameMid_EN(e.target.value)}
                             placeholder="ระบุ ชื่อกลาง"
                             className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
                             type="text"
@@ -840,11 +1033,17 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                           <div className="text-sm my-1 ">
                             Surname <span className="text-red-500">*</span>
                           </div>
-                          <input
+                          <input value={lastname_EN || ""}
+                            onChange={(e) => setLastName_EN(e.target.value)}
                             placeholder="ระบุ นามสกุล"
-                            className="w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                            className={
+                              errorLastName_EN === null || errorLastName_EN.trim() === ""
+                                ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                             type="text"
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorLastName_EN}</p>
                         </div>
                       </div>
                       <div className="grid sm:grid-cols-3 grid-cols-1 gap-8 mt-4 text-[#000]">
@@ -858,7 +1057,11 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               {selectedDate && (
                                 <input
                                   dir="ltr"
-                                  className="w-full bg-[#EEF0F6] border-none p-2 rounded-l-lg"
+                                  className={
+                                    errorBirthDate === null || errorBirthDate.trim() === ""
+                                      ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                      : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                                  }
                                   value={dateState}
                                   placeholder="ระบุ วันเดือนปีเกิด"
                                   onChange={(e) => setDateState(e.target.value)}
@@ -866,7 +1069,11 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               )}
                               {selectedDate && (
                                 <div
-                                  className="w-12 bg-[#EEF0F6] text-[#222222]  rounded-r-lg justify-center flex items-center cursor-pointer"
+                                className={
+                                  errorBirthDate === null || errorBirthDate.trim() === ""
+                                    ? "w-12 bg-[#EEF0F6] text-[#222222]  rounded-r-lg justify-center flex items-center cursor-pointer"
+                                    : "w-12 rounded-r-lg justify-center flex items-center cursor-pointer border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                                }
                                   onClick={toggleDateCalendar}
                                   dir="rtl"
                                 >
@@ -886,27 +1093,40 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                               </div>
                             )}
                           </div>
+                          <p className="text-xs p-0 m-0 text-red-500">{errorBirthDate}</p>
                         </div>
                         <div>
                           <div className="text-sm my-1">
                             เบอร์โทรศัพท์ใหม่
                             <span className="text-red-500">*</span>
                           </div>
-                          <input
-                            placeholder="ระบุ นามสกุล"
-                            className="block bg-[#EEF0F6] border-none p-2 rounded-md w-full"
+                          <input value={mobile || ""}
+                            onChange={(e) => setMobile(e.target.value)}
+                            placeholder="ระบุ เบอร์โทรศัพท์ใหม่"
+                            className={
+                              errorMobile === null || errorMobile.trim() === ""
+                                ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                             type="text"
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorMobile}</p>
                         </div>
                         <div>
                           <div className="text-sm my-1 ">
                             อีเมลใหม่ <span className="text-red-500">*</span>
                           </div>
-                          <input
-                            placeholder="ระบุ ชื่อกลาง"
-                            className="block bg-[#EEF0F6] border-none p-2 rounded-md w-full"
+                          <input value={email || ""}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="ระบุ อีเมลใหม่"
+                            className={
+                              errorEmail === null || errorEmail.trim() === ""
+                                ? "w-full block bg-[#EEF0F6] border-none p-2 rounded-md"
+                                : "w-full block border-none p-2 rounded-md bg-red-500 bg-opacity-10 placeholder-[#D25656] outline-[#D25656]"
+                            }
                             type="text"
                           />
+                          <p className="text-xs p-0 m-0 text-red-500">{errorEmail}</p>
                         </div>
                       </div>
                       <div className="items-center justify-center text-center mx-auto">
@@ -1001,7 +1221,7 @@ function ForgotPasswordModalForm({ isVisible, onClose }) {
                           <div className="flex justify-center mt-3">
                             <div className="w-full bg-[#E5EBFB] rounded-xl text-[#274082] ">
                               <div className="px-2 py-6">
-                                <div class="flex">
+                                <div className="flex">
                                   <AiFillInfoCircle
                                     className="text-[#543FBF]"
                                     size={20}

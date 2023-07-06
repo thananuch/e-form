@@ -31,7 +31,7 @@ function Verificationchannel() {
         <Navigation />
         <div className="flex jusify-center my-10 ml-8 mr-4">
           <div className="lg:px-20 px-10 bg-gradient-to-b from-[#D4DFFD] to-[#EADCC8] rounded-2xl py-10 w-auto">
-            <div class="flex flex-col w-full">
+            <div className="flex flex-col w-full">
               <h2 className="text-2xl font-semibold mt-0">ยืนยันตัวตน</h2>
               <h3 className="text-xl font-thin mt-0 text-[#505050]">
                 เลือกวิธีการยืนยันตัวตน
