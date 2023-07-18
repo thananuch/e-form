@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -6,7 +6,6 @@ import { MdOutlineCalendarMonth } from "react-icons/md";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import Backbackcard from "../../asseets/images/backbackcard.png";
 import styles from "../calendar/Calendar.module.css";
-import { BsFillCloudArrowUpFill } from "react-icons/bs";
 import Swal from "sweetalert2";
 
 function InformationpersonForm() {
@@ -28,7 +27,7 @@ function InformationpersonForm() {
     setSelectedDate(date);
     setshowCalendar(false);
   };
-
+  const [nationality ,setNationality ] = useState("TH");
   const [idCard, setIdCard] = useState("");
   const [laserId, setLaserId] = useState("");
   const [title, setTitle] = useState("");
@@ -42,7 +41,11 @@ function InformationpersonForm() {
   const validateInformationperson = () => {
     const errors = {};
     if (idCard === null || idCard.trim() === "") {
-      errors.idCard = "กรุณากรอกเลขบัตรประจำตัวประชาชน";
+      let errorText = "กรุณากรอกเลขบัตรประจำตัวประชาชน";
+      if(nationality != 'TH'){
+        errorText = "กรุณากรอกหมายเลขหนังสือเดินทาง";
+      }
+      errors.idCard = errorText;
     }
     if (laserId === null || laserId.trim() === "") {
       errors.laserId = "กรุณากรอกรหัสหลังบัตรประชาชน";
@@ -88,22 +91,55 @@ function InformationpersonForm() {
     }
   };
 
+  //ref File upload
+  const delegateFile = useRef(null);
+
+  const handleClickFile = () => {
+    delegateFile.current.click();
+  };
+
   return (
     <>
       <div className="w-full mt-4">
         <h2 className="text-xl font-bold">ข้อมูลส่วนตัว</h2>
         <hr />
       </div>
+      {typeAccountRegist === "P" ? (
+        <>
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 mt-4">
+            <div>
+              <div className="text-sm my-1 ">
+                สัญชาติ
+                <span className="text-red-500">*</span>
+              </div>
+              <div className="flex flex-row">
+                <select
+                  value={nationality}
+                  onChange={(e) => setNationality(e.target.value)}
+                  placeholder="เลือกสัญชาติ"
+                  className="[border:none] outline-none bg-style-1-eef0f6 w-full rounded-xl py-3 px-3 "
+                >
+                  <option value={'TH'}>ไทย</option>
+                  <option value={'EN'}>อังกฤษ</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
+          
+        </>
+      ) : (
+        ""
+      )}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-3">
         <div>
           <div className="text-sm my-1">
-            เลขประจำตัวประชาชน 13 หลัก
+          {nationality === 'TH' ? " เลขประจำตัวประชาชน 13 หลัก" : " หมายเลขหนังสือเดินทาง (Passport)"}
             <span className="text-red-500">*</span>
           </div>
           <div className="flex">
             <input
-              placeholder="ระบุ รหัสประจำตัวประชาชน"
+              placeholder={nationality === 'TH' ? " ระบุ รหัสประจำตัวประชาชน" : "ระบุ หมายเลขหนังสือเดินทาง (Passport)"}
               required
               value={idCard || ""}
               onChange={(e) => setIdCard(e.target.value)}
@@ -120,56 +156,61 @@ function InformationpersonForm() {
                 errors.idCard ? "bg-red-500 bg-opacity-10" : "bg-[#EEF0F6]"
               }`}
             >
-              <Link
-                className="outline outline-offset-1 outline-1 outline-[#576EBA] justify-center text-center 
-                bg-style-1-eef0f6 rounded-2xl text-base text-[#543FBF] p-1"
-              >
-                ตรวจสอบ
-              </Link>
+              {nationality === 'TH' ? 
+                <Link
+                  className="outline outline-offset-1 outline-1 outline-[#576EBA] justify-center text-center 
+                  bg-style-1-eef0f6 rounded-2xl text-base text-[#543FBF] p-1"
+                >
+                  ตรวจสอบ
+                </Link> 
+              : ""}
             </div>
           </div>
           <p className="text-xs p-0 m-0 text-red-500">{errors.idCard}</p>
         </div>
-
-        <div>
-          <div className="flex">
-            <div className="text-sm my-1">รหัสหลังบัตรประจำตัวประชาชน</div>
-            <div className="hidden md:block group relative mt-1 ml-2">
-              <AiOutlineQuestionCircle
-                className="text-[#222222] rounded"
-                size="15"
-              />
-              <span
-                className="absolute top-10 scale-0 transition-all justify-center inherit text-center 
-                rounded bg-white p-2 text-xs text-black w-[300px] group-hover:scale-100 z-10 shadow-xl"
-              >
-                <h2 className="text-xl">เลเซอร์ ไอดี คืออะไร ?</h2>
-                <h4 className="text-xs">
-                  คือรหัสเพื่อยืนยันถึงสถานะสำหรับบัตรประชาชน
-                </h4>
-                <div className="flex justify-center mt-2 mb-2">
-                  <img alt="backcard" src={Backbackcard}></img>
-                </div>
-                <p className="text-xs">1. รหัสปรากฏอยู่ด้านล่างของบัตร</p>
-                <p>2. ใช้รหัสเพื่อยืนยันสถานะบัตรประชน</p>
-              </span>
+        
+        {nationality === 'TH' ? 
+          <div>
+            <div className="flex">
+              <div className="text-sm my-1">รหัสหลังบัตรประจำตัวประชาชน</div>
+              <div className="hidden md:block group relative mt-1 ml-2">
+                <AiOutlineQuestionCircle
+                  className="text-[#222222] rounded"
+                  size="15"
+                />
+                <span
+                  className="absolute top-10 scale-0 transition-all justify-center inherit text-center 
+                  rounded bg-white p-2 text-xs text-black w-[300px] group-hover:scale-100 z-10 shadow-xl"
+                >
+                  <h2 className="text-xl">เลเซอร์ ไอดี คืออะไร ?</h2>
+                  <h4 className="text-xs">
+                    คือรหัสเพื่อยืนยันถึงสถานะสำหรับบัตรประชาชน
+                  </h4>
+                  <div className="flex justify-center mt-2 mb-2">
+                    <img alt="backcard" src={Backbackcard}></img>
+                  </div>
+                  <p className="text-xs">1. รหัสปรากฏอยู่ด้านล่างของบัตร</p>
+                  <p>2. ใช้รหัสเพื่อยืนยันสถานะบัตรประชน</p>
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="flex">
-            <input
-              dir="ltr"
-              placeholder="ระบุ เลเซอร์ไอดี หลังบัตรประชาชนของท่าน"
-              className={
-                errors.laserId
-                  ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
-                  : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
-              }
-              value={laserId || ""}
-              onChange={(e) => setLaserId(e.target.value)}
-            />
-          </div>
-          <p className="text-xs p-0 m-0 text-red-500">{errors.laserId}</p>
-        </div>
+            <div className="flex">
+              <input
+                dir="ltr"
+                placeholder="ระบุ เลเซอร์ไอดี หลังบัตรประชาชนของท่าน"
+                className={
+                  errors.laserId
+                    ? "[border:none] outline-none block w-full rounded-lg py-3 px-3 bg-red-500 bg-opacity-10 placeholder-[#D25656]"
+                    : "[border:none] outline-none bg-style-1-eef0f6 block w-full rounded-lg py-3 px-3"
+                }
+                value={laserId || ""}
+                onChange={(e) => setLaserId(e.target.value)}
+              />
+            </div>
+            <p className="text-xs p-0 m-0 text-red-500">{errors.laserId}</p>
+          </div> 
+          :''
+        }
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
@@ -393,24 +434,25 @@ function InformationpersonForm() {
           </div>
 
           {typeDelegate === "6" ? (
-            <div className="grid grid-cols-2 gap-8 mt-4">
+            <div className="grid grid-cols-1 gap-8 mt-4">
               <label
-                for="delegate-file"
-                className="flex flex-col items-center justify-center w-full h-52 border-none rounded-lg cursor-pointer bg-gradient-to-bl from-[#D5D7EE] to-[#E6E4F5] "
+                htmlFor="delegateFile"
+                className="flex flex-col items-center justify-center w-full border-2 border-dashed border-[#ABABAB] rounded-lg bg-[#fbfbfb] "
               >
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <BsFillCloudArrowUpFill
-                    className="text-[#343D6B]"
-                    size={80}
-                  />
-                  <p className="my-0 text-xl text-[#343D6B] ">
-                    <span className="font-semibold">ลากไฟล์และวางที่นี่</span>
-                  </p>
-                  <p className="text-lg text-[#343D6B] ">
-                    หรือคลิกเพื่ออัพโหลดไฟล์
-                  </p>
+                <div className="flex flex-col items-center justify-center pt-5 pb-6"> 
+                  <div>
+                    <span className="font-medium text-xl mr-2">วางไฟล์ที่นี้</span> 
+                    <span className="font-bold text-lg"> หรือ </span> 
+                    <button 
+                      onClick={handleClickFile}
+                      className="ml-2 bg-white border-[#543FBF] border-1 rounded-2xl font-light text-lg cursor-pointer py-1 px-4 text-[#543FBF]" 
+                      htmlFor="delegate-file" type="button" >เลือกไฟล์</button> 
+                  </div>
+                  <div className="font-thin text-sm mt-4" >
+                    (นามสกุลไฟล์ .pdf ขนาดไม่เกิน 2 mb)
+                  </div>
                 </div>
-                <input id="delegate-file" type="file" className="hidden" />
+                <input ref={delegateFile} id="delegateFile" type="file" className="hidden" accept='application/pdf' />
               </label>
             </div>
           ) : (

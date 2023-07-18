@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useRef} from 'react'
 import { Link } from 'react-router-dom'
 
 import Content from '../../components/layoutAfterLogin/Content'; 
@@ -44,6 +44,12 @@ function RenewDelegatePage() {
             }
           })
     }
+     //ref File upload
+    const delegateFile = useRef(null);
+
+    const handleClickFile = () => {
+        delegateFile.current.click();
+    };
 
   return (
     <>
@@ -143,16 +149,27 @@ function RenewDelegatePage() {
                                         </div>
                                     </div>
                                     <h3>อัพโหลดไฟล์หลักฐาน</h3>
-                                    <div className='grid grid-cols-2 gap-8'>
-                                        <label for='delegate-file' className='flex flex-col items-center justify-center w-full h-52 border-none rounded-lg cursor-pointer bg-gradient-to-bl from-[#D5D7EE] to-[#E6E4F5] '>
-                                            <div className='flex flex-col items-center justify-center pt-5 pb-6'>
-                                                <BsFillCloudArrowUpFill className='text-[#343D6B]' size={80} />
-                                                <p className='my-0 text-xl text-[#343D6B] '><span className='font-semibold'>ลากไฟล์และวางที่นี่</span> </p>
-                                                <p className='text-lg text-[#343D6B] '>หรือคลิกเพื่ออัพโหลดไฟล์</p>
+                                    <div className="grid grid-cols-1 gap-8 mt-4">
+                                        <label
+                                            htmlFor="delegateFile"
+                                            className="flex flex-col items-center justify-center w-full border-2 border-dashed border-[#ABABAB] rounded-lg bg-[#fbfbfb] "
+                                        >
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6"> 
+                                            <div>
+                                                <span className="font-medium text-xl mr-2">วางไฟล์ที่นี้</span> 
+                                                <span className="font-bold text-lg"> หรือ </span> 
+                                                <button 
+                                                onClick={handleClickFile}
+                                                className="ml-2 bg-white border-[#543FBF] border-1 rounded-2xl font-light text-lg cursor-pointer py-1 px-4 text-[#543FBF]" 
+                                                htmlFor="delegate-file" type="button" >เลือกไฟล์</button> 
                                             </div>
-                                            <input id='delegate-file' type='file' className='hidden' />
+                                            <div className="font-thin text-sm mt-4" >
+                                                (นามสกุลไฟล์ .pdf ขนาดไม่เกิน 2 mb)
+                                            </div>
+                                            </div>
+                                            <input ref={delegateFile} id="delegateFile" type="file" className="hidden" accept='application/pdf' />
                                         </label>
-                                    </div> 
+                                    </div>
                                     <div className='my-4 flex justify-end mt-8'>
                                         <Link className='inline-block bg-gradient-to-r from-[#543FBF] to-[#576EBA] border-none 
                                         text-white text-lg justify-center text-center w-auto h-auto rounded-3xl px-10 py-3' onClick={() => renewComplete()} >
